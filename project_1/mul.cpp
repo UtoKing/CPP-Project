@@ -7,7 +7,7 @@ using namespace std;
 
 bool isNumber(string s);
 bool isScientific(string s);
-string multiply(int *a1, int *a2, int a1_length, int a2_length);
+string multiply(int *a1, int *a2, long long a1_length, long long a2_length);
 string del(int *a, int length);
 string scientific2Int(string s);
 string format(string s);
@@ -42,13 +42,13 @@ int main(int argc, char *argv[]) {
         s2 = scientific2Int(s2);
     }
 
-    int decimal = 0;
+    long long decimal = 0;
     int a1[s1.length()] = {0};
     int a2[s2.length()] = {0};
 
     int sign = 1;
 
-    for (int i = s1.length() - 1, j = s1.length() - 1; i >= 0; i--) {
+    for (long long i = s1.length() - 1, j = s1.length() - 1; i >= 0; i--) {
         if (s1[i] != '.' && s1[i] != '-') {
             a1[j] = s1[i] - '0';
             j--;
@@ -58,7 +58,7 @@ int main(int argc, char *argv[]) {
             decimal += s1.length() - i - 1;
     }
 
-    for (int i = s2.length() - 1, j = s2.length() - 1; i >= 0; i--) {
+    for (long long i = s2.length() - 1, j = s2.length() - 1; i >= 0; i--) {
         if (s2[i] != '.' && s2[i] != '-') {
             a2[j] = s2[i] - '0';
             j--;
@@ -93,7 +93,7 @@ bool isScientific(string s) {
     return regex_match(s, r);
 }
 
-string multiply(int *a1, int *a2, int a1_length, int a2_length) {
+string multiply(int *a1, int *a2, long long a1_length, long long a2_length) {
     int *result_int = new int[a1_length + a2_length];
     memset(result_int, 0, sizeof(*result_int) * (a1_length + a2_length));
 
@@ -101,7 +101,7 @@ string multiply(int *a1, int *a2, int a1_length, int a2_length) {
         int remainder = 0;
         int temp[a2_length + 1] = {0};
 
-        for (int j = a2_length - 1, k = a2_length; j >= 0; j--) {
+        for (long long j = a2_length - 1, k = a2_length; j >= 0; j--) {
             int r = a1[i] * a2[j] + remainder;
             temp[k] = r % 10;
             remainder = r / 10;
@@ -110,7 +110,7 @@ string multiply(int *a1, int *a2, int a1_length, int a2_length) {
         temp[0] = remainder;
 
         remainder = 0;
-        for (int j = a2_length, k = i + a2_length; j >= 0; j--) {
+        for (long long j = a2_length, k = i + a2_length; j >= 0; j--) {
             int r = result_int[k] + temp[j] + remainder;
             result_int[k] = r % 10;
             remainder = r / 10;
