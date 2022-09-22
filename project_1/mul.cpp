@@ -7,10 +7,10 @@ using namespace std;
 
 bool isNumber(string s);
 bool isScientific(string s);
-int *multiply(int *a1, int *a2, int a1_length, int a2_length);
+string multiply(int *a1, int *a2, int a1_length, int a2_length);
 string del(int *a, int length);
 string scientific2Int(string s);
-void print_int_array(int *a, int length);
+string format(string s);
 
 int main(int argc, char *argv[]) {
     if (argc < 3) {
@@ -68,10 +68,12 @@ int main(int argc, char *argv[]) {
             decimal += s2.length() - i - 1;
     }
 
-    int *result = multiply(a1, a2, s1.length(), s2.length());
-    string result_str = del(result, s1.length() + s2.length());
+    string result_str = multiply(a1, a2, s1.length(), s2.length());
+
     if (decimal > 0)
         result_str.insert(result_str.length() - decimal, ".");
+
+    result_str = format(result_str);
 
     if (sign == -1)
         result_str.insert(0, "-");
@@ -91,7 +93,7 @@ bool isScientific(string s) {
     return regex_match(s, r);
 }
 
-int *multiply(int *a1, int *a2, int a1_length, int a2_length) {
+string multiply(int *a1, int *a2, int a1_length, int a2_length) {
     int *result_int = new int[a1_length + a2_length];
     memset(result_int, 0, sizeof(*result_int) * (a1_length + a2_length));
 
@@ -116,33 +118,13 @@ int *multiply(int *a1, int *a2, int a1_length, int a2_length) {
         }
     }
 
-    return result_int;
-}
+    string result_str;
 
-string del(int *a, int length) {
-    string s;
-    int zero_num = 0;
-    for (int i = 0; i < length; i++) {
-        if (a[i] == 0)
-            zero_num += 1;
-        else
-            break;
+    for (long long i = 0; i < a1_length + a2_length; i++) {
+        result_str.append(to_string(result_int[i]));
     }
 
-    for (int i = zero_num; i < length; i++) {
-        string c = to_string(a[i]);
-        s.append(c);
-    }
-
-    return s;
-}
-
-void print_int_array(int *a, int length) {
-    for (int i = 0; i < length; i++) {
-        cout << a[i];
-    }
-
-    cout << endl;
+    return result_str;
 }
 
 string scientific2Int(string s) {
@@ -175,4 +157,35 @@ string scientific2Int(string s) {
         part1.insert(0, "-");
 
     return part1;
+}
+
+string format(string s) {
+    long long start_0 = 0;
+    for (long long i = 0; i < s.length(); i++) {
+        if (s[i] == '0') {
+            start_0 += 1;
+        } else {
+            break;
+        }
+    }
+
+    s.erase(0, start_0);
+
+    if (s.find(".") > s.length())
+        return s;
+    else {
+        long long end_0 = 0;
+        for (long long i = s.length() - 1; i >= 0; i--) {
+            if (s[i] == '0')
+                end_0 += 1;
+            else
+                break;
+        }
+
+        s.erase(s.length() - end_0, end_0);
+
+        if (s[s.length() - 1] == '.') s.erase(s.length() - 1, 1);
+
+        return s;
+    }
 }
