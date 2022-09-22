@@ -1,3 +1,3 @@
 # C++ Project
 
-The C++ project of CS 203.
+The C++ project of CS 205.
