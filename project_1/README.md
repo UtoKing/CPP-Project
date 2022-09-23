@@ -42,6 +42,7 @@ Student ID: 11911819
 因此, 我们专门写了一个格式化输出的函数, 专门用于格式化输出, 即去掉首尾多余的 0.
 
 ## PART 2 Code
+---
 
 ### 判断是否是整（小）数或科学计数法
 
@@ -175,6 +176,7 @@ string format(string s) {
 ```
 
 ## PART 3 Result and Verification
+---
 
 ### 输入为非数字或非标准输入
 
@@ -189,6 +191,7 @@ string format(string s) {
 ![样例结果3](images/output7.png)&nbsp;&nbsp;&nbsp;![样例结果4](images/output8.png)
 
 ## PART 4 Difficulties and Solutions
+---
 
 大部分问题都在第一部分提出与分析, 这里便再进行总结以下.
 
