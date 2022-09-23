@@ -31,10 +31,15 @@ Student ID: 11911819
 解决这一步只需要移动移动小数点即可。
 幂指数过大的情况则只需在数字的前方或后方补0即可。
 
-**第三个需要解决的问题**是大数相乘。当相乘的两个数和结果在 `long long` 或 `double` 范围内时，可以直接将输入转化成这两种类型然后相乘。
+**第三个需要解决的问题**是大数相乘。
+当相乘的两个数和结果在 `long long` 或 `double` 范围内时，可以直接将输入转化成这两种类型然后相乘。
 但一旦超出，我们就需要用字符串手动演化一个乘法器。
 为了本方法具有普遍性，我们一律使用乘法器进行计算。
 乘法器本质是人们手算乘法所需要的步骤，即每一位与另一个数相乘然后累加起来。
+
+**第四个需要解决的问题**是输出的格式化.
+即我们应该避免像 `00001` 或者是 `1.200000` 这种首尾带有很多 0 的情况.
+因此, 我们专门写了一个格式化输出的函数, 专门用于格式化输出, 即去掉首尾多余的 0.
 
 ## PART 2 Code
 
@@ -95,7 +100,7 @@ string multiply(int *a1, int *a2, int a1_length, int a2_length) {
     int *result_int = new int[a1_length + a2_length];
     memset(result_int, 0, sizeof(*result_int) * (a1_length + a2_length));
 
-    for (int i = a1_length - 1; i >= 0; i--) {
+    for (long long i = a1_length - 1; i >= 0; i--) {
         int remainder = 0;
         int temp[a2_length + 1] = {0};
 
@@ -126,6 +131,71 @@ string multiply(int *a1, int *a2, int a1_length, int a2_length) {
 }
 ```
 
+### 格式化输出
+
+```c++
+string format(string s) {
+    long long count = 0;
+    for (long long i = 0; i < s.length(); i++) {
+        if (s[i] == '0')
+            count += 1;
+        else
+            break;
+    }
+    if (count == s.length()) return "0";
+
+    long long start_0 = 0;
+    for (long long i = 0; i < s.length(); i++) {
+        if (s[i] == '0' && s[i + 1] != '.') {
+            start_0 += 1;
+        } else {
+            break;
+        }
+    }
+    s.erase(0, start_0);
+
+    if (s.find(".") > s.length())
+        return s;
+    else {
+        long long end_0 = 0;
+        for (long long i = s.length() - 1; i >= 0; i--) {
+            if (s[i] == '0')
+                end_0 += 1;
+            else
+                break;
+        }
+
+        s.erase(s.length() - end_0, end_0);
+
+        if (s[s.length() - 1] == '.') s.erase(s.length() - 1, 1);
+
+        return s;
+    }
+}
+```
+
 ## PART 3 Result and Verification
 
+### 输入为非数字或非标准输入
 
+![非法输入1](images/output1.png)![非法输入2](images/output2.png)
+
+![非法输入3](images/output3.png)![非法输入4](images/output4.png)
+
+### 标准输入样例及结果
+
+![样例结果1](images/output5.png)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![样例结果2](images/output6.png)
+
+![样例结果3](images/output7.png)&nbsp;&nbsp;&nbsp;![样例结果4](images/output8.png)
+
+## PART 4 Difficulties and Solutions
+
+大部分问题都在第一部分提出与分析, 这里便再进行总结以下.
+
+对于识别是否是整(小)数和科学计数法, 使用了正则表达式, 这样既方便了匹配也方便了提取对应的部分.
+
+对于输入不统一的情况, 一律转化成了整(小)数进行计算, 并且可以用同一个接口进行运算.
+
+对于大数相乘, 使用 `long long` 也会遇到超出最大范围的情况, 因此使用了字符串相乘, 即手写乘法器的方法.
+
+最后对于格式化输出, 我们专门写一个格式化输出的函数进行格式化.

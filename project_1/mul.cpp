@@ -34,6 +34,8 @@ int main(int argc, char *argv[]) {
         return 0;
     }
 
+    cout << s1 << " * " << s2 << " = ";
+
     if (isScientific(s1)) {
         s1 = scientific2Int(s1);
     }
@@ -49,21 +51,25 @@ int main(int argc, char *argv[]) {
     int sign = 1;
 
     for (long long i = s1.length() - 1, j = s1.length() - 1; i >= 0; i--) {
-        if (s1[i] != '.' && s1[i] != '-') {
+        if (s1[i] != '.' && s1[i] != '-' && s1[i] != '+') {
             a1[j] = s1[i] - '0';
             j--;
         } else if (s1[i] == '-') {
             sign *= -1;
+        } else if (s1[i] == '+') {
+            continue;
         } else
             decimal += s1.length() - i - 1;
     }
 
     for (long long i = s2.length() - 1, j = s2.length() - 1; i >= 0; i--) {
-        if (s2[i] != '.' && s2[i] != '-') {
+        if (s2[i] != '.' && s2[i] != '-' && s2[i] != '+') {
             a2[j] = s2[i] - '0';
             j--;
         } else if (s2[i] == '-') {
             sign *= -1;
+        } else if (s2[i] == '+') {
+            continue;
         } else
             decimal += s2.length() - i - 1;
     }
@@ -97,7 +103,7 @@ string multiply(int *a1, int *a2, long long a1_length, long long a2_length) {
     int *result_int = new int[a1_length + a2_length];
     memset(result_int, 0, sizeof(*result_int) * (a1_length + a2_length));
 
-    for (int i = a1_length - 1; i >= 0; i--) {
+    for (long long i = a1_length - 1; i >= 0; i--) {
         int remainder = 0;
         int temp[a2_length + 1] = {0};
 
@@ -160,15 +166,23 @@ string scientific2Int(string s) {
 }
 
 string format(string s) {
+    long long count = 0;
+    for (long long i = 0; i < s.length(); i++) {
+        if (s[i] == '0')
+            count += 1;
+        else
+            break;
+    }
+    if (count == s.length()) return "0";
+
     long long start_0 = 0;
     for (long long i = 0; i < s.length(); i++) {
-        if (s[i] == '0') {
+        if (s[i] == '0' && s[i + 1] != '.') {
             start_0 += 1;
         } else {
             break;
         }
     }
-
     s.erase(0, start_0);
 
     if (s.find(".") > s.length())
