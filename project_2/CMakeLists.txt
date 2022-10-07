@@ -3,4 +3,6 @@ project(project_2)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(project_2 main.cpp src/multiply.cpp)
+include_directories(include)
+
+add_executable(project_2 main.cpp src/multiply.cpp src/add.cpp src/numberFunctions.cpp)

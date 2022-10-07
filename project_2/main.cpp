@@ -1,12 +1,13 @@
 #include <iostream>
 #include "string"
 #include "include/multiply.h"
+#include "add.h"
 
 using namespace std;
 
 int main() {
-    string s1 = "123";
-    string s2 = "234";
-    cout << strMultiply(s1, s2);
+    string s1 = "27394.98";
+    string s2 = "2389.24";
+    cout << add(s1, s2);
 
 }
