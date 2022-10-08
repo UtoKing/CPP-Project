@@ -8,6 +8,9 @@
 #endif //PROJECT_2_MULTIPLY_H
 
 #include "string"
+#include "regex"
+#include "iostream"
+#include "numberFunctions.h"
 
 using namespace std;
 

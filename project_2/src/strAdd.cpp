@@ -2,17 +2,13 @@
 // Created by UtoKing on 2022/10/7.
 //
 
-#include "add.h"
-#include "string"
-#include "iostream"
-#include "numberFunctions.h"
-#include <cstring>
+#include "strAdd.h"
 
 using namespace std;
 
-string integerAdd(string s1, string s2);
+vector<int> integerAdd(vector<int> a1, vector<int> a2);
 
-string add(string s1, string s2) {
+string strAdd(string s1, string s2) {
     if (!(isNumber(s1) || isScientific(s1))) {
         return "First input is Not a Number or Not Standard!";
     }
@@ -42,60 +38,49 @@ string add(string s1, string s2) {
         decimal2 = s2.length() - n;
     }
 
-    string result_str;
-
     if (decimal2 > decimal1) {
         s1.append(decimal2 - decimal1, '0');
-        result_str = integerAdd(s1, s2);
     } else if (decimal1 > decimal2) {
         s2.append(decimal1 - decimal2, '0');
-        result_str = integerAdd(s1, s2);
     }
 
-    cout << s1 << " " << s2 << endl;
+    vector<int> a1, a2;
 
-    result_str = integerAdd(s1, s2);
+    for (char i: s1) {
+        a1.push_back(i - '0');
+    }
 
+    for (char i: s2) {
+        a2.push_back(i - '0');
+    }
+
+    vector<int> result_vector = integerAdd(a1, a2);
+
+    string result_str = vector2String(result_vector);
     result_str.insert(result_str.length() - max(decimal1, decimal2), ".");
     result_str = format(result_str);
 
     return result_str;
 }
 
-string integerAdd(string s1, string s2) {
-    int a1[s1.length()];
-    int a2[s2.length()];
+vector<int> integerAdd(vector<int> a1, vector<int> a2) {
 
-    int result_length = max(s1.length(), s2.length()) + 1;
-    int result_int[result_length];
-    memset(result_int, 0, sizeof(*result_int) * result_length);
+    vector<int> result_int;
 
-    for (int i = 0; i < s1.length(); ++i) {
-        a1[i] = s1[i] - '0';
-    }
-
-    for (int i = 0; i < s2.length(); ++i) {
-        a2[i] = s2[i] - '0';
-    }
+    int length = max(a1.size(), a2.size());
 
     int remainder = 0;
-    for (int i = s1.length() - 1, j = s2.length() - 1, k = result_length - 1; k > 0; k--) {
+    for (int i = a1.size() - 1, j = a2.size() - 1, k = 0; k < length; k++) {
         int temp = a1[i] + a2[j] + remainder;
-        result_int[k] = temp % 10;
+        result_int.insert(result_int.begin(), temp % 10);
         remainder = temp / 10;
         if (i > 0) i--;
         else a1[0] = 0;
         if (j > 0) j--;
-        else a2[j] = 0;
+        else a2[0] = 0;
     }
-    result_int[0] = remainder;
+    result_int.insert(result_int.begin(), remainder);
 
-    string result_str;
-
-    for (int i = 0; i < result_length; i++) {
-        result_str.append(to_string(result_int[i]));
-    }
-
-    return result_str;
+    return result_int;
 
 }

@@ -2,9 +2,7 @@
 // Created by UtoKing on 2022/10/7.
 //
 
-#include "../include/numberFunctions.h"
-#include "string"
-#include "regex"
+#include "numberFunctions.h"
 
 using namespace std;
 
@@ -87,4 +85,19 @@ string format(string s) {
 
         return s;
     }
+}
+
+string vector2String(vector<int> vec) {
+    stringstream ss;
+    string str;
+    copy(vec.begin(), vec.end(), ostream_iterator<int>(ss, ""));
+    str = ss.str();
+    return str;
+}
+
+void print_array(int a[], int a_length) {
+    for (int i = 0; i < a_length; ++i) {
+        cout << a[i];
+    }
+    cout << endl;
 }

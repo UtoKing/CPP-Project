@@ -5,4 +5,4 @@ set(CMAKE_CXX_STANDARD 14)
 
 include_directories(include)
 
-add_executable(project_2 main.cpp src/multiply.cpp src/add.cpp src/numberFunctions.cpp)
+add_executable(project_2 main.cpp src/strMultiply.cpp src/strAdd.cpp src/numberFunctions.cpp src/strMinus.cpp src/strDivision.cpp)

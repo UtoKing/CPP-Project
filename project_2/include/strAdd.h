@@ -8,7 +8,10 @@
 #endif //PROJECT_2_ADD_H
 
 #include "string"
+#include "iostream"
+#include "numberFunctions.h"
+#include <cstring>
 
 using namespace std;
 
-string add(string s1, string s2);
+string strAdd(string s1, string s2);
