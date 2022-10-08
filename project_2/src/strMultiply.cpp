@@ -6,8 +6,6 @@
 
 using namespace std;
 
-vector<int> integerMultiply(vector<int> &a1, vector<int> &a2);
-
 string strMultiply(string s1, string s2) {
 
     if (!(isNumber(s1) || isScientific(s1))) {
@@ -62,11 +60,11 @@ string strMultiply(string s1, string s2) {
     }
 
     vector<int> result_vector = integerMultiply(a1, a2);
-    string result_str = vector2String(result_vector);
+    if (result_vector.empty()) result_vector.push_back(0);
 
+    string result_str = vector2String(result_vector);
     if (decimal > 0)
         result_str.insert(result_str.length() - decimal, ".");
-
     result_str = format(result_str);
 
     if (sign == -1) result_str.insert(0, "-");
@@ -104,6 +102,8 @@ vector<int> integerMultiply(vector<int> &a1, vector<int> &a2) {
     }
 
     vector<int> result_vector(result_int, result_int + a1_length + a2_length);
+
+    result_vector = format(result_vector);
 
     return result_vector;
 }

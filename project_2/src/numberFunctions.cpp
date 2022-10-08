@@ -101,3 +101,44 @@ void print_array(int a[], int a_length) {
     }
     cout << endl;
 }
+
+void print_vector(const vector<int> &a) {
+    for (auto i: a) cout << i;
+    cout << endl;
+}
+
+vector<int> cutArrs(vector<int> arrs, int begin, int end) {
+    vector<int> result;
+    result.assign(arrs.begin() + begin, arrs.begin() + end);
+    return result;
+}
+
+bool compare(vector<int> a1, vector<int> a2) {
+
+    /**
+     * @brief compare two integer vectors.
+     * @param a1 the first vector
+     * @param a2 the second vector
+     * @return a bool type
+     *
+     * This function will compare two integer vectors, and return true if a1 >= a2.
+     */
+
+    if (a1.size() > a2.size()) return true;
+    else if (a1.size() < a2.size()) return false;
+
+    for (int i = 0; i < a1.size(); ++i) {
+        if (a1[i] > a2[i]) return true;
+        else if (a1[i] == a2[i]) continue;
+        else return false;
+    }
+    return true;
+}
+
+vector<int> format(vector<int> vec) {
+    for (int i = 0; i < vec.size();) {
+        if (vec[i] == 0) vec.erase(vec.begin());
+        else break;
+    }
+    return vec;
+}

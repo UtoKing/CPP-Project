@@ -15,3 +15,5 @@
 using namespace std;
 
 string strAdd(string s1, string s2);
+
+vector<int> integerAdd(vector<int> a1, vector<int> a2);

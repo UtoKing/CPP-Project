@@ -6,8 +6,6 @@
 
 using namespace std;
 
-vector<int> integerAdd(vector<int> a1, vector<int> a2);
-
 string strAdd(string s1, string s2) {
     if (!(isNumber(s1) || isScientific(s1))) {
         return "First input is Not a Number or Not Standard!";

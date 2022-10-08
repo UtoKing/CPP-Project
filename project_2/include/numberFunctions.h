@@ -24,3 +24,11 @@ string format(string s);
 string vector2String(vector<int> vec);
 
 void print_array(int a[], int a_length);
+
+void print_vector(const vector<int>& a);
+
+vector<int> cutArrs(vector<int> arrs, int begin, int end);
+
+bool compare(vector<int> a1, vector<int> a2);
+
+vector<int> format(vector<int> vec);

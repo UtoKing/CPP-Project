@@ -14,3 +14,5 @@
 using namespace std;
 
 string strMinus(string s1, string s2);
+
+vector<int> integerMinus(vector<int> &a1, vector<int> &a2);

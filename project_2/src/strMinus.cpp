@@ -4,8 +4,6 @@
 
 #include "strMinus.h"
 
-vector<int> integerMinus(vector<int> &a1, vector<int> &a2);
-
 string strMinus(string s1, string s2) {
 
     if (!(isNumber(s1) || isScientific(s1))) {
@@ -71,6 +69,7 @@ string strMinus(string s1, string s2) {
     }
 
     vector<int> result_vector = integerMinus(a1, a2);
+    if (result_vector.empty()) result_vector.push_back(0);
 
     string result_str = vector2String(result_vector);
     result_str.insert(result_str.length() - max(decimal1, decimal2), ".");
@@ -82,16 +81,18 @@ string strMinus(string s1, string s2) {
 }
 
 vector<int> integerMinus(vector<int> &a1, vector<int> &a2) {
-    vector<int> result;
+    vector<int> result_vector;
     for (int i = a1.size() - 1, j = a2.size() - 1; i >= 0; --i) {
-        if (a1[i] >= a2[i]) result.insert(result.begin(), a1[i] - a2[j]);
+        if (a1[i] >= a2[j]) result_vector.insert(result_vector.begin(), a1[i] - a2[j]);
         else {
-            result.insert(result.begin(), a1[i] - a2[j] + 10);
+            result_vector.insert(result_vector.begin(), a1[i] - a2[j] + 10);
             a1[i - 1] -= 1;
         }
         if (j > 0) j--;
         else a2[0] = 0;
     }
 
-    return result;
+    result_vector = format(result_vector);
+
+    return result_vector;
 }

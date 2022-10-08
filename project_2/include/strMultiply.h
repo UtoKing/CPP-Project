@@ -15,3 +15,5 @@
 using namespace std;
 
 string strMultiply(string s1, string s2);
+
+vector<int> integerMultiply(vector<int> &a1, vector<int> &a2);
