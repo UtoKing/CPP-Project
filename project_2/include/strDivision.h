@@ -14,3 +14,5 @@
 using namespace std;
 
 string strDivision(string s1, string s2, int precision = 20);
+
+vector<int> integerDivision(vector<int> &a1, vector<int> &a2, int precision);
