@@ -102,8 +102,13 @@ void print_array(int a[], int a_length) {
     cout << endl;
 }
 
+void print_vector(const vector<string> &a) {
+    for (const auto &i: a) cout << i << " ";
+    cout << endl;
+}
+
 void print_vector(const vector<int> &a) {
-    for (auto i: a) cout << i;
+    for (const auto &i: a) cout << i << " ";
     cout << endl;
 }
 

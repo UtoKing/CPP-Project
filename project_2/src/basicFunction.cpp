@@ -40,7 +40,7 @@ string str_exponential(const string &s) {
 
 string str_tangent(const string &s) {
     double a = stod(s);
-    if (abs(a - M_PI / 2) <= 1e-10) {
+    if (abs(a - M_PI / 2) <= 1e-6) {
         cout << "Can't calculate tangent when the input is pi/2.";
         exit(0);
     }
@@ -50,7 +50,7 @@ string str_tangent(const string &s) {
 
 string str_cotangent(const string &s) {
     double a = stod(s);
-    if (abs(a) <= 1e-10) {
+    if (abs(a) <= 1e-6) {
         cout << "Can't calculate cotangent when the input is zero.";
         exit(0);
     }
