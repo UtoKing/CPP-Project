@@ -18,10 +18,6 @@ vector<string> transToRPN(string s) {
     for (int i = 0; i < n; i++) {
         if (s[i] >= '0' && s[i] <= '9') {
             string temp;
-            if (s[i - 1] == '-' and s[i - 2] == '(') {
-                temp.push_back('-');
-                op_stack.pop();
-            }
             while (s[i] >= '0' && s[i] <= '9') {
                 temp.push_back(s[i]);
                 i++;
@@ -33,6 +29,7 @@ vector<string> transToRPN(string s) {
             int current_priority = brackets.size() * 10 + 1;
             string temp(1, s[i]);
             pair<string, int> p({temp, current_priority});
+            if (s[i - 1] == '(') ans.emplace_back("0");
             if (op_stack.empty()) {
                 op_stack.push(p);
             } else {

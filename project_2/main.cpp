@@ -12,9 +12,10 @@
 using namespace std;
 
 int main() {
-    string string1 = "7+cos(-6)";
+    string string1 = "(-6)*(-7)+0*3-cos((-5)/6)*exp(-1)+log(33*sqrt(2))";
     vector<string> rpn = transToRPN(string1);
+    print_vector(rpn);
     string result = calculator(rpn);
     cout << result << endl;
-//    cout << 5 + 6 * 7 + exp(pow(2, 2)) * (cos(2 + 3) + log(7));
+    cout << double(-6.0) * (-7) + 0 * 3 - cos(double(-5) / 6) * exp(-1) + log(33 * sqrt(double (2)));
 }
