@@ -18,10 +18,15 @@ vector<string> transToRPN(string s) {
     for (int i = 0; i < n; i++) {
         if (s[i] >= '0' && s[i] <= '9') {
             string temp;
+            if (s[i - 1] == '-' and s[i - 2] == '(') {
+                temp.push_back('-');
+                op_stack.pop();
+            }
             while (s[i] >= '0' && s[i] <= '9') {
                 temp.push_back(s[i]);
                 i++;
             }
+
             ans.push_back(temp);
             i--;
         } else if (s[i] == '+' || s[i] == '-') {
@@ -61,10 +66,11 @@ vector<string> transToRPN(string s) {
                 }
             }
         } else if (s.substr(i, 3) == "sin" || s.substr(i, 3) == "cos" || s.substr(i, 3) == "cot" ||
-                   s.substr(i, 3) == "exp" || s.substr(i, 3) == "log") {
-            int current_priority = brackets.size() * 10 + 3;
+                   s.substr(i, 3) == "exp" || s.substr(i, 3) == "log" || s.substr(i, 3) == "tan") {
+            int current_priority = brackets.size() * 10 + 4;
             string temp = s.substr(i, 3);
             pair<string, int> p({temp, current_priority});
+            i += 2;
             if (op_stack.empty()) {
                 op_stack.push(p);
             } else {
@@ -79,7 +85,25 @@ vector<string> transToRPN(string s) {
                     op_stack.push(p);
                 }
             }
-
+        } else if (s.substr(i, 4) == "sqrt") {
+            int current_priority = brackets.size() * 10 + 4;
+            string temp = s.substr(i, 4);
+            pair<string, int> p({temp, current_priority});
+            i += 3;
+            if (op_stack.empty()) {
+                op_stack.push(p);
+            } else {
+                pair<string, int> last_node = op_stack.top();
+                if (current_priority > last_node.second) {
+                    op_stack.push(p);
+                } else {
+                    while (!op_stack.empty() && current_priority <= op_stack.top().second) {
+                        ans.push_back(op_stack.top().first);
+                        op_stack.pop();
+                    }
+                    op_stack.push(p);
+                }
+            }
         } else if (s[i] == '^') {
             int current_priority = brackets.size() * 10 + 3;
             string temp(1, s[i]);

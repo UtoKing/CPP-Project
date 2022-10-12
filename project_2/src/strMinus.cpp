@@ -3,6 +3,7 @@
 //
 
 #include "strMinus.h"
+#include "strAdd.h"
 
 string strMinus(string s1, string s2) {
 
@@ -24,6 +25,24 @@ string strMinus(string s1, string s2) {
 
     int decimal1 = 0;
     int decimal2 = 0;
+
+    if (s1[0] == '+') {
+        s1.erase(0, 1);
+    }
+    if (s2[0] == '+') {
+        s2.erase(0, 1);
+    }
+
+    if (s1[0] == '-') {
+        s1.erase(0, 1);
+        string r = strAdd(s1, s2);
+        if (r[0] == '-') return r.erase(0, 1);
+        else return r.insert(0, "-");
+    }
+    if (s2[0] == '-') {
+        s2.erase(0, 1);
+        return strAdd(s1, s2);
+    }
 
     int n;
     if ((n = s1.find('.')) != string::npos) {

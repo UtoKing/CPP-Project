@@ -6,12 +6,15 @@
 #include "strDivision.h"
 #include "basicFunction.h"
 #include "RPN_convert.h"
+#include "calculator.h"
+#include "cmath"
 
 using namespace std;
 
 int main() {
-//    vector<string> s = {"1", "+", "2"};
-    string string1 = "2+cos(3*4+5)";
-//    print_vector(convert2RPN(s));
-    print_vector(transToRPN(string1));
+    string string1 = "7+cos(-6)";
+    vector<string> rpn = transToRPN(string1);
+    string result = calculator(rpn);
+    cout << result << endl;
+//    cout << 5 + 6 * 7 + exp(pow(2, 2)) * (cos(2 + 3) + log(7));
 }
