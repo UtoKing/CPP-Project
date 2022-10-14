@@ -4,4 +4,5 @@ y=-5
 x+y
 y
 sqrt(x)
+sqrt(y)
 #
