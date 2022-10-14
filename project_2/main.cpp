@@ -1,21 +1,30 @@
 #include <iostream>
 #include "string"
-#include "strMultiply.h"
-#include "strAdd.h"
-#include "strMinus.h"
-#include "strDivision.h"
-#include "basicFunction.h"
 #include "RPN_convert.h"
 #include "calculator.h"
 #include "cmath"
+#include "defineVariable.h"
+#include "map"
 
 using namespace std;
 
 int main() {
-    string string1 = "(-6)*(-7)+0*3-cos((-5)/6)*exp(-1)+log(33*sqrt(2))";
-    vector<string> rpn = transToRPN(string1);
-    print_vector(rpn);
-    string result = calculator(rpn);
-    cout << result << endl;
-    cout << double(-6.0) * (-7) + 0 * 3 - cos(double(-5) / 6) * exp(-1) + log(33 * sqrt(double (2)));
+    map<char, string> variable;
+    while (true) {
+        string input;
+        getline(cin, input);
+        if (input == "#") break;
+        else if (isDefine(input, variable)) {
+            cout << "Define variable successfully!" << endl;
+            continue;
+        } else {
+            vector<string> rpn = transToRPN(input, variable);
+            if (rpn.empty()) {
+                cout << "Invalid Input" << endl;
+                continue;
+            }
+            string result = calculator(rpn);
+            cout << result << endl;
+        }
+    }
 }

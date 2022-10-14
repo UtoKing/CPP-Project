@@ -9,7 +9,8 @@
 
 #include "string"
 #include "vector"
+#include "map"
 
 using namespace std;
 
-vector<string> transToRPN(string s);
+vector<string> transToRPN(string s, map<char, string> &variable);

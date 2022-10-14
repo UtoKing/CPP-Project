@@ -15,10 +15,10 @@
 
 using namespace std;
 
-string calculator(const vector<string>& vs) {
+string calculator(const vector<string> &vs) {
     stack<string> num;
-    for (auto & v : vs) {
-        if (isNumber(v)) {
+    for (auto &v: vs) {
+        if (isNumber(v) || isScientific(v)) {
             num.push(v);
         } else if (v == "+" || v == "-" || v == "*" || v == "/" || v == "^") {
             string a2 = num.top();

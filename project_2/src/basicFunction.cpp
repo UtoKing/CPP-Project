@@ -12,7 +12,7 @@ using namespace std;
 string str_sqrt(const string &s) {
     double a = stod(s);
     if (a < 0) {
-        cout << "Can't calculate square root when the input is less than 0.";
+        cout << "SQRT: Can't calculate square root when the input is less than 0.";
         exit(0);
     }
     a = sqrt(a);
@@ -41,7 +41,7 @@ string str_exponential(const string &s) {
 string str_tangent(const string &s) {
     double a = stod(s);
     if (abs(a - M_PI / 2) <= 1e-6) {
-        cout << "Can't calculate tangent when the input is pi/2.";
+        cout << "TAN: Can't calculate tangent when the input is pi/2.";
         exit(0);
     }
     a = tan(a);
@@ -51,7 +51,7 @@ string str_tangent(const string &s) {
 string str_cotangent(const string &s) {
     double a = stod(s);
     if (abs(a) <= 1e-6) {
-        cout << "Can't calculate cotangent when the input is zero.";
+        cout << "COT: Can't calculate cotangent when the input is zero.";
         exit(0);
     }
     a = atan(a);
@@ -68,7 +68,7 @@ string str_pow(const string &s1, const string &s2) {
 string str_log(const string& s) {
     double a = stod(s);
     if (a < 0) {
-        cout << "Can't calculate when the input is less zero.";
+        cout << "LOG: Can't calculate when the input is less zero.";
         exit(0);
     }
     a = log(a);

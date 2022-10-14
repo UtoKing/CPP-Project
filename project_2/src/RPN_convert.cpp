@@ -6,30 +6,40 @@
 #include <stack>
 #include "RPN_convert.h"
 #include "string"
+#include "numberFunctions.h"
 
 using namespace std;
 
-vector<string> transToRPN(string s) {
+vector<string> transToRPN(string s, map<char, string> &variable) {
     vector<string> ans;
     stack<pair<string, int>> op_stack;
     stack<char> brackets;
+    map<char, string>::iterator iter;
 
     int n = s.length();
     for (int i = 0; i < n; i++) {
         if (s[i] >= '0' && s[i] <= '9') {
             string temp;
-            while (s[i] >= '0' && s[i] <= '9') {
+            while ((s[i] >= '0' && s[i] <= '9') || s[i] == 'e' || s[i] == 'E') {
                 temp.push_back(s[i]);
                 i++;
             }
-
-            ans.push_back(temp);
+            if (isNumber(temp) || isScientific(temp))
+                ans.push_back(temp);
+            else {
+                cout << "Input is not valid!";
+                vector<string> empty;
+                return empty;
+            }
             i--;
+
+        } else if ((iter = variable.find(s[i])) != variable.end()) {
+            ans.push_back(iter->second);
         } else if (s[i] == '+' || s[i] == '-') {
             int current_priority = brackets.size() * 10 + 1;
             string temp(1, s[i]);
             pair<string, int> p({temp, current_priority});
-            if (s[i - 1] == '(') ans.emplace_back("0");
+            if (i == 0 || s[i - 1] == '(') ans.emplace_back("0");
             if (op_stack.empty()) {
                 op_stack.push(p);
             } else {
