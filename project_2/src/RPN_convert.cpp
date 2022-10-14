@@ -20,7 +20,7 @@ vector<string> transToRPN(string s, map<char, string> &variable) {
     for (int i = 0; i < n; i++) {
         if (s[i] >= '0' && s[i] <= '9') {
             string temp;
-            while ((s[i] >= '0' && s[i] <= '9') || s[i] == 'e' || s[i] == 'E') {
+            while ((s[i] >= '0' && s[i] <= '9') || s[i] == 'e' || s[i] == 'E' || s[i] == '.') {
                 temp.push_back(s[i]);
                 i++;
             }

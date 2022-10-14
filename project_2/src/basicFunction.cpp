@@ -13,7 +13,7 @@ string str_sqrt(const string &s) {
     double a = stod(s);
     if (a < 0) {
         cout << "SQRT: Can't calculate square root when the input is less than 0.";
-        exit(0);
+        return "";
     }
     a = sqrt(a);
     return to_string(a);
@@ -42,7 +42,7 @@ string str_tangent(const string &s) {
     double a = stod(s);
     if (abs(a - M_PI / 2) <= 1e-6) {
         cout << "TAN: Can't calculate tangent when the input is pi/2.";
-        exit(0);
+        return "";
     }
     a = tan(a);
     return to_string(a);
@@ -52,7 +52,7 @@ string str_cotangent(const string &s) {
     double a = stod(s);
     if (abs(a) <= 1e-6) {
         cout << "COT: Can't calculate cotangent when the input is zero.";
-        exit(0);
+        return "";
     }
     a = atan(a);
     return to_string(a);
@@ -67,9 +67,9 @@ string str_pow(const string &s1, const string &s2) {
 
 string str_log(const string& s) {
     double a = stod(s);
-    if (a < 0) {
-        cout << "LOG: Can't calculate when the input is less zero.";
-        exit(0);
+    if (a <= 0) {
+        cout << "LOG: Can't calculate when the input is less than or equal to zero.";
+        return "";
     }
     a = log(a);
     return to_string(a);

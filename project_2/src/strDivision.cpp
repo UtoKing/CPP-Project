@@ -38,7 +38,10 @@ string strDivision(string s1, string s2, int precision) {
     }
 
     if (format(s1) == "0") return "0";
-    if (format(s2) == "0") return "The divisor can't be zero!";
+    if (format(s2) == "0") {
+        cout << "Divisor can't be zero!" << endl;
+        return "";
+    }
 
     int decimal1 = 0;
     int decimal2 = 0;

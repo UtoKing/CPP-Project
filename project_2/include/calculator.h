@@ -12,4 +12,4 @@
 
 using namespace std;
 
-string calculator(const vector<string>& vs);
+string calculator(const vector<string> &vs, int precision = 20);

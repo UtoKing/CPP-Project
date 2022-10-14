@@ -12,7 +12,7 @@
 using namespace std;
 
 bool isDefine(const string &s, map<char, string> &m) {
-    regex regex1("^([a-zA-Z])=(.+)");
+    regex regex1("^([a-zA-Z])=(.+)$");
     smatch result;
     bool ret = regex_match(s, result, regex1);
     if (ret) {

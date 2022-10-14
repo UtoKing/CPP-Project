@@ -15,7 +15,7 @@
 
 using namespace std;
 
-string calculator(const vector<string> &vs) {
+string calculator(const vector<string> &vs, int precision) {
     stack<string> num;
     for (auto &v: vs) {
         if (isNumber(v) || isScientific(v)) {
@@ -36,7 +36,8 @@ string calculator(const vector<string> &vs) {
                 string r = strMultiply(a1, a2);
                 num.push(r);
             } else if (v == "/") {
-                string r = strDivision(a1, a2);
+                string r = strDivision(a1, a2, precision);
+                if (r.empty())  return "";
                 num.push(r);
             } else {
                 string r = str_pow(a1, a2);
@@ -69,5 +70,5 @@ string calculator(const vector<string> &vs) {
             }
         }
     }
-    return num.top();
+    return format(num.top());
 }
