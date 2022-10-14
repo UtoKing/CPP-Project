@@ -1,8 +1,0 @@
-x=2+3
-x*2
-y=-5
-x+y
-y
-sqrt(x)
-sqrt(y)
-#
