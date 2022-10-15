@@ -50,7 +50,7 @@ z=sqrt(3)*2+log(3)
 
 要将这些变量加入计算则需要在转化的时候加上额外的判定条件. 即如果出现 `a-z A-Z` 的字母, 则会查询字典, 并将查询得到的值压入逆波兰表达式里.
 
-**另外**, 本次 project 有以下的基本函数 $\log \ \sin\ \cos\ \tan\ \cot\ \exp \ \text{sqrt}$.
+**另外**, 本次 project 有以下的基本函数 $\log \ \sin\ \cos\ \tan\ \cot\ \exp \ \text{sqrt}$. 其中 $\log$ 是以 $e$ 为底的对数.
 
 ## PART 2: Code
 
