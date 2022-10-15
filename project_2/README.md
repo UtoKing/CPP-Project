@@ -487,15 +487,24 @@ int main(int argc, char *argv[]) {
 
 在这一部分做了数十个左右的测试, 因为输入可能会很长的缘故, 所以做了输入的重定向, 即由 `input.txt` 来进行输入 (这一部分没有上传到 GitHub 上, 因为这一部分可以由用户自定义).
 
+测试时输入在命令行输入以下命令 (其中 10 为用户设置的精度, 是命令行参数).
+
+```bash
+./calculator 10 <input.txt
+```
+
 输入输出的截图如下.
 
 Input
 
-![1665756269180](./images/input.png)
+![Input](./images/input.png)
 
 Output
 
-![1665756276639](./images/output.png)
+![Output](./images/output.png)
+
+Shell Screenshot
+![Shell Screenshot](./images/shell_screenshot.png)
 
 
 ## PART 4: Difficulties and Solutions
