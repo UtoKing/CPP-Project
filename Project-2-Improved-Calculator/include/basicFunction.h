@@ -5,8 +5,6 @@
 #ifndef PROJECT_2_BASICFUNCTION_H
 #define PROJECT_2_BASICFUNCTION_H
 
-#endif //PROJECT_2_BASICFUNCTION_H
-
 #include "string"
 
 using namespace std;
@@ -28,4 +26,8 @@ string str_cotangent(const string &s);
 string str_pow(const string &s1, const string &s2);
 
 string str_log(const string &s);
+
+#endif //PROJECT_2_BASICFUNCTION_H
+
+
 

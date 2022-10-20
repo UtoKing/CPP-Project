@@ -5,8 +5,6 @@
 #ifndef PROJECT_2_ADD_H
 #define PROJECT_2_ADD_H
 
-#endif //PROJECT_2_ADD_H
-
 #include "string"
 #include "iostream"
 #include "numberFunctions.h"
@@ -17,3 +15,7 @@ using namespace std;
 string strAdd(string s1, string s2);
 
 vector<int> integerAdd(vector<int> a1, vector<int> a2);
+
+#endif //PROJECT_2_ADD_H
+
+
