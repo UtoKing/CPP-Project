@@ -5,10 +5,10 @@
 #ifndef PROJECT_2_MATRIX_OPERATION_MATRIX_H
 #define PROJECT_2_MATRIX_OPERATION_MATRIX_H
 
-#endif //PROJECT_2_MATRIX_OPERATION_MATRIX_H
-
-struct matrix{
+typedef struct{
     int rows;
     int columns;
     float *data;
-};
+}matrix;
+
+#endif //PROJECT_2_MATRIX_OPERATION_MATRIX_H
