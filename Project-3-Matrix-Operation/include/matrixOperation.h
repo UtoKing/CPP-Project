@@ -12,7 +12,7 @@
 
 void printMatrix(matrix *m);
 
-matrix *createMatrix(float *data, int rows, int columns);
+matrix *createMatrix(float *data, int row, int column);
 
 void deleteMatrix(matrix *m);
 
@@ -31,6 +31,8 @@ void multiplyScalar(matrix *m, float scalar);
 float max(matrix *m);
 
 float min(matrix *m);
+
+matrix *multiplyMatrix(matrix *matrix1, matrix *matrix2);
 
 #endif //PROJECT_2_MATRIX_OPERATION_MATRIXOPERATION_H
 

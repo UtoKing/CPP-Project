@@ -6,8 +6,8 @@
 #define PROJECT_2_MATRIX_OPERATION_MATRIX_H
 
 typedef struct{
-    int rows;
-    int columns;
+    int row;
+    int column;
     float *data;
 }matrix;
 
