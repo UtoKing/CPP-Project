@@ -8,14 +8,14 @@ void printMatrix(matrix *m) {
     int row = m->row, column = m->column;
     float *pDouble = m->data;
 
-    printf("Matrix: \n");
+    printf("Matrix: [\n");
     for (int i = 0; i < row * column; ++i) {
         printf("%f", *pDouble);
         pDouble++;
         if ((i + 1) % column == 0) { printf("\n"); }
         else { printf(","); }
     }
-    printf("\n");
+    printf("]\n");
 }
 
 matrix *createMatrix(float *data, int row, int column) {
@@ -85,7 +85,7 @@ matrix *subtractMatrix(matrix *matrix1, matrix *matrix2) {
     return result;
 }
 
-void addScalar(matrix *m, float scalar) {
+void addScalar_(matrix *m, float scalar) {
     int row = m->row, column = m->column;
     float *pDouble = m->data;
     for (int i = 0; i < row * column; ++i) {
@@ -94,11 +94,12 @@ void addScalar(matrix *m, float scalar) {
     }
 }
 
-void subtractScalar(matrix *m, float scalar) {
-    addScalar(m, -scalar);
+void subtractScalar_(matrix *m, float scalar) {
+    addScalar_(m, -scalar);
+
 }
 
-void multiplyScalar(matrix *m, float scalar) {
+void multiplyScalar_(matrix *m, float scalar) {
     int row = m->row, column = m->column;
     float *pDouble = m->data;
     for (int i = 0; i < row * column; ++i) {
@@ -107,8 +108,37 @@ void multiplyScalar(matrix *m, float scalar) {
     }
 }
 
+matrix *addScalar(matrix *m, float scalar) {
+    int row = m->row, column = m->column;
+    float *pDouble1 = m->data;
+    float *pDouble2 = (float *) malloc(row * column * sizeof(float));
+    for (int i = 0; i < row * column; ++i) {
+        *pDouble2 = *pDouble1 + scalar;
+        pDouble1++;
+        pDouble2++;
+    }
+    pDouble2 -= row * column;
+    return createMatrix(pDouble2, row, column);
+}
+
+matrix *subtractScalar(matrix *m, float scalar) {
+    return addScalar(m, -scalar);
+}
+
+matrix *multiplyScalar(matrix *m, float scalar) {
+    int row = m->row, column = m->column;
+    float *pDouble1 = m->data;
+    float *pDouble2 = (float *) malloc(row * column * sizeof(float));
+    for (int i = 0; i < row * column; ++i) {
+        *pDouble2 = *pDouble1 * scalar;
+        pDouble1++;
+        pDouble2++;
+    }
+    return createMatrix(pDouble2, row, column);
+}
+
 float max(matrix *m) {
-    float max = 0;
+    float max = *m->data;
     int row = m->row, column = m->column;
     float *pDouble = m->data;
     for (int i = 0; i < row * column; ++i) {
@@ -119,7 +149,7 @@ float max(matrix *m) {
 }
 
 float min(matrix *m) {
-    float min = 0;
+    float min = *(m->data);
     int row = m->row, column = m->column;
     float *pDouble = m->data;
     for (int i = 0; i < row * column; ++i) {

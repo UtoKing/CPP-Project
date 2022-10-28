@@ -22,11 +22,17 @@ matrix *addMatrix(matrix *matrix1, matrix *matrix2);
 
 matrix *subtractMatrix(matrix *matrix1, matrix *matrix2);
 
-void addScalar(matrix *m, float scalar);
+void addScalar_(matrix *m, float scalar);
 
-void subtractScalar(matrix *m, float scalar);
+void subtractScalar_(matrix *m, float scalar);
 
-void multiplyScalar(matrix *m, float scalar);
+void multiplyScalar_(matrix *m, float scalar);
+
+matrix *addScalar(matrix *m, float scalar);
+
+matrix *subtractScalar(matrix *m, float scalar);
+
+matrix *multiplyScalar(matrix *m, float scalar);
 
 float max(matrix *m);
 
