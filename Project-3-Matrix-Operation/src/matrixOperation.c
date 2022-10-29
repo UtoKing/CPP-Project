@@ -134,6 +134,7 @@ matrix *multiplyScalar(matrix *m, float scalar) {
         pDouble1++;
         pDouble2++;
     }
+    pDouble2 -= row * column;
     return createMatrix(pDouble2, row, column);
 }
 
