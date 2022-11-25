@@ -166,7 +166,7 @@ matrix *addScalar(matrix *m, float scalar) {
 ### 矩阵相乘
 
 ```c
-matrix *multiplyMatrix(matrix *matrix1, matrix *matrix2) {
+matrix *matmul_plain(matrix *matrix1, matrix *matrix2) {
     assert(matrix1->column == matrix2->row);
     int row = matrix1->row, column = matrix2->column, middle = matrix1->column;
     float *pDouble = (float *) malloc(row * column * sizeof(float));

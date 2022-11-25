@@ -10,20 +10,22 @@
 #include "string.h"
 
 typedef struct{
-    int row;
-    int column;
+    size_t row;
+    size_t column;
     float *data;
 }matrix;
 
 void printMatrix(matrix *m);
 
-matrix *createMatrix(float *data, int row, int column);
+matrix *createMatrix(float *data, size_t row, size_t column);
 
 void deleteMatrix(matrix *m);
 
 matrix *copyMatrix(matrix *m);
 
-matrix *multiplyMatrix(matrix *matrix1, matrix *matrix2);
+matrix *matmul_plain(matrix *matrix_1, matrix *matrix_2);
+
+matrix *matmul_improved(matrix *matrix_1, matrix *matrix_2);
 
 #endif //PROJECT_2_MATRIX_OPERATION_MATRIXOPERATION_H
 

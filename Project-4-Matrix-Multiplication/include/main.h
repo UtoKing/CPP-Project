@@ -6,6 +6,8 @@
 #define PROJECT_3_MATRIX_OPERATION_MAIN_H
 
 #include <stdio.h>
+#include "stdlib.h"
+#include "time.h"
 #include "matrixOperation.h"
 
 #endif //PROJECT_3_MATRIX_OPERATION_MAIN_H
