@@ -29,4 +29,6 @@ matrix *matmul_improved(matrix *matrix_1, matrix *matrix_2);
 
 matrix *matmul_simd(matrix *matrix_1, matrix *matrix_2);
 
+matrix *matmul_openmp(matrix *matrix_1, matrix *matrix_2);
+
 #endif  // PROJECT_2_MATRIX_OPERATION_MATRIXOPERATION_H

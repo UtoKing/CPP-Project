@@ -9,5 +9,7 @@
 #include "stdlib.h"
 #include "time.h"
 #include "matrixOperation.h"
+#include <omp.h>
+#include "cblas.h"
 
 #endif //PROJECT_3_MATRIX_OPERATION_MAIN_H

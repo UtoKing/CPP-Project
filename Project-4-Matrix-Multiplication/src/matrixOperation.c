@@ -111,3 +111,29 @@ matrix *matmul_simd(matrix *matrix_1, matrix *matrix_2) {
   }
   return createMatrix(pFloat, row, column);
 }
+
+matrix *matmul_openmp(matrix *matrix_1, matrix *matrix_2) {
+  assert(matrix_1->column == matrix_2->row);
+  size_t row = matrix_1->row, column = matrix_2->column,
+	  middle = matrix_1->column;
+  float *pFloat = (float *)malloc(row * column * sizeof(float));
+  __m256 row_data[column / 8];
+  for (int i = 0; i < row; ++i) {
+	for (int j = 0; j < column / 8; ++j) {
+	  row_data[j] = _mm256_setzero_ps();
+	}
+#pragma omp parallel for
+	for (int j = 0; j < middle; ++j) {
+	  __m256 r = _mm256_set1_ps(*(matrix_1->data + i * row + j));
+#pragma omp parallel for
+	  for (int k = 0; k < column / 8; ++k) {
+		__m256 temp = _mm256_loadu_ps(matrix_2->data + j * middle + k * 8);
+		row_data[k] = _mm256_fmadd_ps(r, temp, row_data[k]);
+	  }
+	}
+	for (int j = 0; j < column / 8; ++j) {
+	  _mm256_storeu_ps(pFloat + i * row + j * 8, row_data[j]);
+	}
+  }
+  return createMatrix(pFloat, row, column);
+}
