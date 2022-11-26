@@ -25,10 +25,28 @@ void printMatrix(matrix *m) {
 }
 
 matrix *createMatrix(float *data, size_t row, size_t column) {
-  matrix *m = (matrix *)malloc(sizeof(matrix));
+  matrix *m = NULL;
+
+  if (row == 0 || column == 0) {
+	fprintf(stderr, "row or/and column is 0.\n");
+	return NULL;
+  }
+
+  m = (matrix *)malloc(sizeof(matrix));
+
+  if (m == NULL) {
+	fprintf(stderr, "Failed to allocate memory.\n");
+	return NULL;
+  }
   m->row = row;
   m->column = column;
   m->data = (float *)malloc(sizeof(float) * row * column);
+
+  if (m->data == NULL) {
+	fprintf(stderr, "Failed to allocate memory.\n");
+	free(m);
+	return NULL;
+  }
 
   float *pFloat = m->data;
   for (int i = 0; i < row * column; ++i) {
@@ -39,25 +57,59 @@ matrix *createMatrix(float *data, size_t row, size_t column) {
   return m;
 }
 
-void deleteMatrix(matrix *m) {
-  if (m == NULL) return;
-  free(m->data);
+bool deleteMatrix(matrix *m) {
+  if (m == NULL) return false;
+  if (m->data) free(m->data);
   free(m);
-  m = NULL;
+  return true;
 }
 
 matrix *copyMatrix(matrix *m) {
-  float *pFloat3 = (float *)malloc(m->row * m->column * sizeof(float));
-  memcpy(pFloat3, m->data, m->row * m->column * sizeof(float));
-  matrix *copy = createMatrix(pFloat3, m->row, m->column);
+  if (m == NULL) {
+	fprintf(stderr, "File %s, Line %d, Function %s: Input is invalid.\n", __FILE__, __LINE__, __FUNCTION__);
+  } else if (m->data == NULL) {
+	fprintf(stderr, "File %s, Line %d, Function %s: Input has invalid data.\n", __FILE__, __LINE__, __FUNCTION__);
+  }
+
+  float *pFloat = (float *)malloc(m->row * m->column * sizeof(float));
+  if (pFloat == NULL) {
+	fprintf(stderr, "Failed to allocate memory.\n");
+  }
+
+  memcpy(pFloat, m->data, m->row * m->column * sizeof(float));
+  matrix *copy = createMatrix(pFloat, m->row, m->column);
   return copy;
 }
 
 matrix *matmul_plain(matrix *matrix_1, matrix *matrix_2) {
-  assert(matrix_1->column == matrix_2->row);
+  if (matrix_1 == NULL) {
+	fprintf(stderr, "File %s, Line %d, Function %s: First input is invalid.\n", __FILE__, __LINE__, __FUNCTION__);
+  } else if (matrix_1->data == NULL) {
+	fprintf(stderr, "File %s, Line %d, Function %s: First input has invalid data.\n", __FILE__, __LINE__, __FUNCTION__);
+  }
+
+  if (matrix_2 == NULL) {
+	fprintf(stderr, "File %s, Line %d, Function %s: Second input is invalid.\n", __FILE__, __LINE__, __FUNCTION__);
+  } else if (matrix_2->data == NULL) {
+	fprintf(stderr,
+			"File %s, Line %d, Function %s: Second input has invalid data.\n",
+			__FILE__,
+			__LINE__,
+			__FUNCTION__);
+  }
+
+  if (matrix_1->column != matrix_2->row) {
+	fprintf(stderr, "Failed to perform matrix multiplication.\n");
+  }
+
   size_t row = matrix_1->row, column = matrix_2->column,
 	  middle = matrix_1->column;
+
   float *pFloat = (float *)malloc(row * column * sizeof(float));
+  if (pFloat == NULL) {
+	fprintf(stderr, "Failed to allocate memory.\n");
+  }
+
   for (int i = 0; i < row * column; ++i) {
 	size_t n_row = i / column, n_column = i % column;
 	float sum = 0;
@@ -73,10 +125,34 @@ matrix *matmul_plain(matrix *matrix_1, matrix *matrix_2) {
 }
 
 matrix *matmul_improved(matrix *matrix_1, matrix *matrix_2) {
-  assert(matrix_1->column == matrix_2->row);
+  if (matrix_1 == NULL) {
+	fprintf(stderr, "File %s, Line %d, Function %s: First input is invalid.\n", __FILE__, __LINE__, __FUNCTION__);
+  } else if (matrix_1->data == NULL) {
+	fprintf(stderr, "File %s, Line %d, Function %s: First input has invalid data.\n", __FILE__, __LINE__, __FUNCTION__);
+  }
+
+  if (matrix_2 == NULL) {
+	fprintf(stderr, "File %s, Line %d, Function %s: Second input is invalid.\n", __FILE__, __LINE__, __FUNCTION__);
+  } else if (matrix_2->data == NULL) {
+	fprintf(stderr,
+			"File %s, Line %d, Function %s: Second input has invalid data.\n",
+			__FILE__,
+			__LINE__,
+			__FUNCTION__);
+  }
+
+  if (matrix_1->column != matrix_2->row) {
+	fprintf(stderr, "Failed to perform matrix multiplication.\n");
+  }
+
   size_t row = matrix_1->row, column = matrix_2->column,
 	  middle = matrix_1->column;
+
   float *pFloat = (float *)malloc(row * column * sizeof(float));
+  if (pFloat == NULL) {
+	fprintf(stderr, "Failed to allocate memory.\n");
+  }
+
   for (int k = 0; k < middle; ++k) {
 	for (int i = 0; i < row; ++i) {
 	  float r = *(matrix_1->data + i * row + k);
@@ -89,10 +165,34 @@ matrix *matmul_improved(matrix *matrix_1, matrix *matrix_2) {
 }
 
 matrix *matmul_simd(matrix *matrix_1, matrix *matrix_2) {
-  assert(matrix_1->column == matrix_2->row);
+  if (matrix_1 == NULL) {
+	fprintf(stderr, "File %s, Line %d, Function %s: First input is invalid.\n", __FILE__, __LINE__, __FUNCTION__);
+  } else if (matrix_1->data == NULL) {
+	fprintf(stderr, "File %s, Line %d, Function %s: First input has invalid data.\n", __FILE__, __LINE__, __FUNCTION__);
+  }
+
+  if (matrix_2 == NULL) {
+	fprintf(stderr, "File %s, Line %d, Function %s: Second input is invalid.\n", __FILE__, __LINE__, __FUNCTION__);
+  } else if (matrix_2->data == NULL) {
+	fprintf(stderr,
+			"File %s, Line %d, Function %s: Second input has invalid data.\n",
+			__FILE__,
+			__LINE__,
+			__FUNCTION__);
+  }
+
+  if (matrix_1->column != matrix_2->row) {
+	fprintf(stderr, "Failed to perform matrix multiplication.\n");
+  }
+
   size_t row = matrix_1->row, column = matrix_2->column,
 	  middle = matrix_1->column;
+
   float *pFloat = (float *)malloc(row * column * sizeof(float));
+  if (pFloat == NULL) {
+	fprintf(stderr, "Failed to allocate memory.\n");
+  }
+
   __m256 row_data[column / 8];
   for (int i = 0; i < row; ++i) {
 	for (int j = 0; j < column / 8; ++j) {
@@ -113,10 +213,34 @@ matrix *matmul_simd(matrix *matrix_1, matrix *matrix_2) {
 }
 
 matrix *matmul_openmp(matrix *matrix_1, matrix *matrix_2) {
-  assert(matrix_1->column == matrix_2->row);
+  if (matrix_1 == NULL) {
+	fprintf(stderr, "File %s, Line %d, Function %s: First input is invalid.\n", __FILE__, __LINE__, __FUNCTION__);
+  } else if (matrix_1->data == NULL) {
+	fprintf(stderr, "File %s, Line %d, Function %s: First input has invalid data.\n", __FILE__, __LINE__, __FUNCTION__);
+  }
+
+  if (matrix_2 == NULL) {
+	fprintf(stderr, "File %s, Line %d, Function %s: Second input is invalid.\n", __FILE__, __LINE__, __FUNCTION__);
+  } else if (matrix_2->data == NULL) {
+	fprintf(stderr,
+			"File %s, Line %d, Function %s: Second input has invalid data.\n",
+			__FILE__,
+			__LINE__,
+			__FUNCTION__);
+  }
+
+  if (matrix_1->column != matrix_2->row) {
+	fprintf(stderr, "Failed to perform matrix multiplication.\n");
+  }
+
   size_t row = matrix_1->row, column = matrix_2->column,
 	  middle = matrix_1->column;
+
   float *pFloat = (float *)malloc(row * column * sizeof(float));
+  if (pFloat == NULL) {
+	fprintf(stderr, "Failed to allocate memory.\n");
+  }
+
   __m256 row_data[column / 8];
   for (int i = 0; i < row; ++i) {
 	for (int j = 0; j < column / 8; ++j) {

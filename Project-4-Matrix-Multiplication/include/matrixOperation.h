@@ -5,6 +5,7 @@
 #ifndef PROJECT_2_MATRIX_OPERATION_MATRIXOPERATION_H
 #define PROJECT_2_MATRIX_OPERATION_MATRIXOPERATION_H
 
+#include <stdbool.h>
 #include "assert.h"
 #include "malloc.h"
 #include "string.h"
@@ -19,7 +20,7 @@ void printMatrix(matrix *m);
 
 matrix *createMatrix(float *data, size_t row, size_t column);
 
-void deleteMatrix(matrix *m);
+bool deleteMatrix(matrix *m);
 
 matrix *copyMatrix(matrix *m);
 
