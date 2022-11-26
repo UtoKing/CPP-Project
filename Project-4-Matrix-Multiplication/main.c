@@ -18,13 +18,14 @@ int main() {
   matrix *m3;
   double duration;
 
-  start = clock();
-  m3 = matmul_plain(m1, m2);
-  stop = clock();
-  printf("First five element: %f, %f, %f, %f, %f,\n", *(m3->data),
-         *(m3->data + 1), *(m3->data + 2), *(m3->data + 3), *(m3->data + 4));
-  duration = (double)(stop - start) / CLOCKS_PER_SEC;
-  printf("Plain Time: %fs\n", duration);
+  //   start = clock();
+  //   m3 = matmul_plain(m1, m2);
+  //   stop = clock();
+  //   printf("First five element: %f, %f, %f, %f, %f,\n", *(m3->data),
+  //          *(m3->data + 1), *(m3->data + 2), *(m3->data + 3), *(m3->data +
+  //          4));
+  //   duration = (double)(stop - start) / CLOCKS_PER_SEC;
+  //   printf("Plain Time: %fs\n", duration);
 
   start = clock();
   m3 = matmul_improved(m1, m2);
