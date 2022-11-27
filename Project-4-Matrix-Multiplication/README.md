@@ -238,6 +238,6 @@ cblas_sgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, m1->row, m2->column,
  **improved** | 0.000155s    |   0.109603s    |   3.496663s     |  2997.796907s   
  **SIMD**     | 0.000049s    |    0.021087s   |   0.675707s     |  351.525582s    
  **OpenMP**   | 0.000051s    |   0.019728s    |   0.724746s     |  350.796248s     
- **OpenBLAS** |0.000231s    |    0.042744s    |  0.053698s      |  27.249689s     
+ **OpenBLAS** |0.000231s    |    0.042744s    |  0.053698s      |  3.5934 s     
 
 
