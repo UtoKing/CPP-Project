@@ -8,9 +8,9 @@ Student ID: 11911819
 
 ## PART 1: Analysis
 
-矩阵乘法：$C=A\cdot B$.
+矩阵乘法：![](http://latex.codecogs.com/svg.latex?C=AB).
 
-1. 根据矩阵乘法的定义的 implementation: 使用 $c_{ij}=\sum_{k=0}^{n} a_{ik}b_{kj}$ 完成三重 for 循环即可。
+1. 根据矩阵乘法的定义的 implementation: 使用 ![](http://latex.codecogs.com/svg.latex?c_{ij}={\textstyle\sum_{k=0}^{n}}a_{ik}b_{kj}) 完成三重 for 循环即可。
 
 2. **改进版的矩阵乘法**：因为矩阵相乘时第二个矩阵是提取每一列出来，因此在内存中是不连续的，读取时会花费很多时间。
 而将矩阵转置也同样会花费很多的时间。
