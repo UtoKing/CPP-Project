@@ -8,7 +8,7 @@ Student ID: 11911819
 
 ## PART 1: Analysis
 
-矩阵乘法：$C=AB$.
+矩阵乘法：$C=A\cdot B$.
 
 1. 根据矩阵乘法的定义的 implementation: 使用 $c_{ij}=\sum_{k=0}^{n} a_{ik}b_{kj}$ 完成三重 for 循环即可。
 
