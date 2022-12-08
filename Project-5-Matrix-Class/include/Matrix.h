@@ -11,13 +11,19 @@
 using namespace std;
 
 namespace Mat {
-template<typename T>
-class Matrix;
 
 template<typename T>
 class Matrix {
  private:
   shared_ptr<T> data;
+
+  //Addition
+  bool add_(const T &);
+  bool add_(const Matrix<T> &);
+
+  //Subtraction
+  bool subtract_(const T &);
+  bool subtract_(const Matrix<T> &);
 
  public:
   size_t row, column;
@@ -40,18 +46,34 @@ class Matrix {
 
   // Addition
   Matrix<T> add(const Matrix<T> &) const;
-  bool add_(const Matrix<T> &);
   Matrix<T> add(const T &) const;
-  bool add_(const T &);
+  Matrix<T> operator+(const Matrix<T> &);
+  Matrix<T> operator+(const T &);
+  template<typename U, typename V>
+  friend Matrix<U> operator+(const V &, const Matrix<U> &);
+  Matrix<T> &operator+=(const Matrix<T> &);
+  Matrix<T> &operator+=(const T &);
 
-  template<typename U>
-  friend Matrix<U> operator+(const Matrix<U> &, const Matrix<U> &);
+  //subtraction
+  Matrix<T> subtract(const Matrix<T> &) const;
+  Matrix<T> subtract(const T &) const;
+  Matrix<T> operator-(const Matrix<T> &);
+  Matrix<T> operator-(const T &);
+  template<typename U, typename V>
+  friend Matrix<U> operator-(const V &, const Matrix<U> &);
+  Matrix<T> &operator-=(const Matrix<T> &);
+  Matrix<T> &operator-=(const T &);
 
-  template<typename U>
-  friend Matrix<U> operator+(const Matrix<U> &, const U &);
+
+  //Assignment
+  Matrix<T> &operator=(const Matrix<T> &);
 
   template<typename U>
   friend ostream &operator<<(ostream &os, const Matrix<U> &matrix);
+
+  ~Matrix() {
+	cout << "!!!" << endl;
+  }
 };
 
 }// Mat
