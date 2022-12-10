@@ -16,6 +16,7 @@ template<typename T>
 class Matrix {
  private:
   shared_ptr<T> data;
+  size_t row, column;
 
   //Addition
   bool add_(const T &);
@@ -26,7 +27,6 @@ class Matrix {
   bool subtract_(const Matrix<T> &);
 
  public:
-  size_t row, column;
   Matrix() : row(0), column(0) {}
   Matrix(size_t r, size_t c) : row(r), column(c) {
 	data.get() = new T[r * c];
@@ -40,6 +40,8 @@ class Matrix {
   }
 
   shared_ptr<T> getData() const { return this->data; }
+  size_t getRow() const { return this->row; }
+  size_t getColumn() const { return this->column; }
 
   T getElement(size_t r, size_t c);
   bool setElement(size_t r, size_t c, const T &t);
@@ -64,6 +66,8 @@ class Matrix {
   Matrix<T> &operator-=(const Matrix<T> &);
   Matrix<T> &operator-=(const T &);
 
+  //multiplication
+  Matrix<T> multiply(const Matrix<T> &) const;
 
   //Assignment
   Matrix<T> &operator=(const Matrix<T> &);
@@ -72,7 +76,7 @@ class Matrix {
   friend ostream &operator<<(ostream &os, const Matrix<U> &matrix);
 
   ~Matrix() {
-	cout << "!!!" << endl;
+	data.reset();
   }
 };
 
