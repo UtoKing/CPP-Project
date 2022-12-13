@@ -11,12 +11,21 @@ namespace Mat {
 //addition
 template<typename T>
 Matrix<T> Matrix<T>::add(const Matrix<T> &matrix) const {
-  if (not this->data or not matrix.getData()) {
-	cerr << "Error: Null pointer!" << endl;
+  if (not this->data) {
+	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
+		 << "Error: Invalid object."
+		 << endl;
+	return Matrix<T>();
+  } else if (not matrix.getData()) {
+	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
+		 << "Error: Input is invalid."
+		 << endl;
 	return Matrix<T>();
   }
   if (this->row != matrix.row or this->column != matrix.column) {
-	cerr << "Error: matrix are not the same size" << endl;
+	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
+		 << "Error: Matrix of different size."
+		 << endl;
 	return Matrix<T>();
   }
 
@@ -30,7 +39,9 @@ Matrix<T> Matrix<T>::add(const Matrix<T> &matrix) const {
 template<typename T>
 Matrix<T> Matrix<T>::add(const T &t) const {
   if (not this->data) {
-	cerr << "Error: Null pointer!" << endl;
+	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
+		 << "Error: Invalid object."
+		 << endl;
 	return Matrix<T>();
   }
 
@@ -43,12 +54,21 @@ Matrix<T> Matrix<T>::add(const T &t) const {
 
 template<typename T>
 bool Matrix<T>::add_(const Matrix<T> &matrix) {
-  if (not this->data or not matrix.getData()) {
-	cerr << "Error: Null pointer!" << endl;
-	return false;
+  if (not this->data) {
+	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
+		 << "Error: Invalid object."
+		 << endl;
+	return Matrix<T>();
+  } else if (not matrix.getData()) {
+	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
+		 << "Error: Input is invalid."
+		 << endl;
+	return Matrix<T>();
   }
   if (this->row != matrix.row or this->column != matrix.column) {
-	cerr << "Error: matrix are not the same size" << endl;
+	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
+		 << "Error: Matrix of different size."
+		 << endl;
 	return false;
   }
 
@@ -61,7 +81,9 @@ bool Matrix<T>::add_(const Matrix<T> &matrix) {
 template<typename T>
 bool Matrix<T>::add_(const T &t) {
   if (not this->data) {
-	cerr << "Error: Null pointer!" << endl;
+	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
+		 << "Error: Invalid object."
+		 << endl;
 	return false;
   }
 

@@ -1,5 +1,4 @@
-#include <iostream>
-#include "src/Matrix.cpp"
+#include "main.h"
 
 using namespace std;
 using namespace Mat;
@@ -13,11 +12,12 @@ int main() {
   }
   Matrix<double> matrix1(4, 3, p_double);
   Matrix<double> matrix2(3, 4, p_double);
-  Matrix<double> matrix3 = matrix1.multiply(matrix2);
-  cout << matrix3 << endl;
 
   cout << matrix1 << endl;
-//  Matrix<double> matrix3 = matrix1 + matrix2;
+  cout << matrix2 << endl;
+
+  Matrix<double> matrix3 = matrix1.multiply(matrix2);
+  cout << matrix3 << endl;
 
   return 0;
 }

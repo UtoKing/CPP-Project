@@ -43,6 +43,7 @@ class Matrix {
   size_t getRow() const { return this->row; }
   size_t getColumn() const { return this->column; }
 
+  //Element operation
   T getElement(size_t r, size_t c);
   bool setElement(size_t r, size_t c, const T &t);
 
@@ -67,7 +68,7 @@ class Matrix {
   Matrix<T> &operator-=(const T &);
 
   //multiplication
-  Matrix<T> multiply(const Matrix<T> &) const;
+  Matrix<T> multiply(const Matrix<T> &);
 
   //Assignment
   Matrix<T> &operator=(const Matrix<T> &);
@@ -76,7 +77,7 @@ class Matrix {
   friend ostream &operator<<(ostream &os, const Matrix<U> &matrix);
 
   ~Matrix() {
-	data.reset();
+	cout << "Destructor" << endl;
   }
 };
 
