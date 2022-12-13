@@ -18,13 +18,17 @@ class Matrix {
   shared_ptr<T> data;
   size_t row, column;
 
-  //Addition
+  //self-addition
   bool add_(const T &);
   bool add_(const Matrix<T> &);
 
-  //Subtraction
+  //self-subtraction
   bool subtract_(const T &);
   bool subtract_(const Matrix<T> &);
+
+  //self-multiplication
+  bool multiply_(const Matrix<T> &);
+  bool multiply_(const T &);
 
  public:
   Matrix() : row(0), column(0) {}
@@ -33,7 +37,7 @@ class Matrix {
   }
   Matrix(size_t r, size_t c, T *p_t) : row(r), column(c) {
 	shared_ptr<T> temp(p_t);
-	data = temp;
+	this->data = temp;
   }
   Matrix(const Matrix &matrix) : row(matrix.row), column(matrix.column) {
 	this->data = matrix.getData();
@@ -46,6 +50,9 @@ class Matrix {
   //Element operation
   T getElement(size_t r, size_t c);
   bool setElement(size_t r, size_t c, const T &t);
+
+  //Matrix operation
+  Matrix<T> transpose() const;
 
   // Addition
   Matrix<T> add(const Matrix<T> &) const;
@@ -68,10 +75,20 @@ class Matrix {
   Matrix<T> &operator-=(const T &);
 
   //multiplication
-  Matrix<T> multiply(const Matrix<T> &);
+  Matrix<T> multiply(const Matrix<T> &) const;
+  Matrix<T> multiply(const T &) const;
+  Matrix<T> operator*(const Matrix<T> &);
+  Matrix<T> operator*(const T &) const;
+  template<typename U, typename V>
+  friend Matrix<U> operator*(const V &, const Matrix<U> &);
+  Matrix<T> &operator*=(const Matrix<T> &);
+  Matrix<T> &operator*=(const T &);
 
   //Assignment
   Matrix<T> &operator=(const Matrix<T> &);
+
+  //equal
+  bool operator==(const Matrix<T> &);
 
   template<typename U>
   friend ostream &operator<<(ostream &os, const Matrix<U> &matrix);

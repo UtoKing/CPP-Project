@@ -10,5 +10,6 @@
 #include "src/multiply.cpp"
 #include "src/add.cpp"
 #include "src/subtract.cpp"
+#include "src/matrix_operation.cpp"
 
 #endif //PROJECT_5_MATRIX_CLASS__MAIN_H_

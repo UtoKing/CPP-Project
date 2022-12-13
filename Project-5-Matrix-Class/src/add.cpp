@@ -30,6 +30,12 @@ Matrix<T> Matrix<T>::add(const Matrix<T> &matrix) const {
   }
 
   T *p_t = new T[this->row * this->column];
+  if (p_t== nullptr){
+	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
+		 << "Error: Failed to allocate memory."
+		 << endl;
+	return Matrix<T>();
+  }
   for (int i = 0; i < this->row * this->column; ++i) {
 	*(p_t + i) = *(this->data.get() + i) + *(matrix.getData().get() + i);
   }
@@ -46,6 +52,12 @@ Matrix<T> Matrix<T>::add(const T &t) const {
   }
 
   T *p_t = new T[this->row * this->column];
+  if (p_t== nullptr){
+	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
+		 << "Error: Failed to allocate memory."
+		 << endl;
+	return Matrix<T>();
+  }
   for (int i = 0; i < this->row * this->column; ++i) {
 	*(p_t + i) = t + *(this->data.get() + i);
   }
@@ -110,26 +122,12 @@ Matrix<T> operator+(const V &v, const Matrix<T> &matrix) {
 
 template<typename T>
 Matrix<T> &Matrix<T>::operator+=(const Matrix<T> &matrix) {
-  if (not this->data or not matrix.getData()) {
-	cerr << "Error: Null pointer!" << endl;
-	return *this;
-  }
-  if (this->row != matrix.row or this->column != matrix.column) {
-	cerr << "Error: matrix are not the same size" << endl;
-	return *this;
-  }
-
   this->add_(matrix);
   return *this;
 }
 
 template<typename T>
 Matrix<T> &Matrix<T>::operator+=(const T &t) {
-  if (not this->data) {
-	cerr << "Error: Null pointer!" << endl;
-	return *this;
-  }
-
   this->add_(t);
   return *this;
 }

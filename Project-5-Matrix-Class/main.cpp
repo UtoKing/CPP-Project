@@ -11,13 +11,8 @@ int main() {
 	*(p_int + i) = i;
   }
   Matrix<double> matrix1(4, 3, p_double);
-  Matrix<double> matrix2(3, 4, p_double);
-
-  cout << matrix1 << endl;
+  Matrix<double> matrix2 = matrix1.transpose();
   cout << matrix2 << endl;
-
-  Matrix<double> matrix3 = matrix1.multiply(matrix2);
-  cout << matrix3 << endl;
 
   return 0;
 }

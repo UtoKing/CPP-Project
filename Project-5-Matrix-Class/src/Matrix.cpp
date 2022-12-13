@@ -12,11 +12,15 @@ namespace Mat {
 template<typename T>
 T Matrix<T>::getElement(size_t r, size_t c) {
   if (not this->data) {
-	cerr << "Error: Null pointer!" << endl;
+	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
+		 << "Error: Null pointer."
+		 << endl;
 	return 0;
   }
   if (r >= this->row or c >= this->column) {
-	cerr << "Error: Indices out of range!" << endl;
+	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
+		 << "Error: Null pointer."
+		 << endl;
 	return 0;
   }
 
@@ -26,11 +30,15 @@ T Matrix<T>::getElement(size_t r, size_t c) {
 template<typename T>
 bool Matrix<T>::setElement(size_t r, size_t c, const T &t) {
   if (not this->data) {
-	cerr << "Error: Null pointer!" << endl;
+	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
+		 << "Error: Null pointer."
+		 << endl;
 	return false;
   }
   if (r >= this->row or c >= this->column) {
-	cerr << "Error: Indices out of range!" << endl;
+	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
+		 << "Error: Index out of range."
+		 << endl;
 	return false;
   }
 
@@ -44,6 +52,31 @@ Matrix<T> &Matrix<T>::operator=(const Matrix<T> &matrix) {
   this->column = matrix.column;
   this->data = matrix.getData();
   return *this;
+}
+
+template<typename T>
+bool Matrix<T>::operator==(const Matrix<T> &matrix) {
+  if (not data) {
+	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
+		 << "Error: invalid object."
+		 << endl;
+	return false;
+  }
+  if (not matrix.getData()) {
+	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
+		 << "Error: invalid input."
+		 << endl;
+	return false;
+  }
+
+  if (row != matrix.getRow() or column != matrix.getColumn()) return false;
+  if (data.get() == matrix.getData().get()) return true;
+  bool b = true;
+  for (int i = 0; i < row * column; ++i) {
+	if (*(data.get() + i) != *(matrix.getData().get() + i))
+	  b = false;
+  }
+  return b;
 }
 
 template<typename T>
