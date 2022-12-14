@@ -4,14 +4,13 @@
 
 #include "Matrix.h"
 #include <iostream>
-#include <immintrin.h>
 
 using namespace std;
 namespace Mat {
 
 template<typename T>
 T Matrix<T>::getElement(size_t r, size_t c) {
-  if (not this->data) {
+  if (not data) {
 	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
 		 << "Error: Null pointer."
 		 << endl;
@@ -19,7 +18,7 @@ T Matrix<T>::getElement(size_t r, size_t c) {
   }
   if (r >= this->row or c >= this->column) {
 	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
-		 << "Error: Null pointer."
+		 << "Error: Index out of range."
 		 << endl;
 	return 0;
   }
@@ -93,7 +92,8 @@ ostream &operator<<(ostream &os, const Matrix<T> &matrix) {
 	os << ']';
 	if (j < matrix.row - 1) os << endl;
   }
-  os << ']' << endl;
+  os << ']';
   return os;
 }
+
 }

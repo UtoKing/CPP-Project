@@ -43,11 +43,10 @@ class Matrix {
 	this->data = matrix.getData();
   }
 
+  //Basic information getter
   shared_ptr<T> getData() const { return this->data; }
   size_t getRow() const { return this->row; }
   size_t getColumn() const { return this->column; }
-
-  //Element operation
   T getElement(size_t r, size_t c);
   bool setElement(size_t r, size_t c, const T &t);
 
@@ -90,6 +89,7 @@ class Matrix {
   //equal
   bool operator==(const Matrix<T> &);
 
+  //io stream
   template<typename U>
   friend ostream &operator<<(ostream &os, const Matrix<U> &matrix);
 
@@ -97,7 +97,12 @@ class Matrix {
 	cout << "Destructor" << endl;
   }
 };
-
 }// Mat
+
+#include "matrix_add.inl"
+#include "matrix_subtract.inl"
+#include "matrix_multiply.inl"
+#include "matrix_operation.inl"
+#include "Matrix.inl"
 
 #endif //PROJECT_5_MATRIX_CLASS_INCLUDE_MATRIX_H_
