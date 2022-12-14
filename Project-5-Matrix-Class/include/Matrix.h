@@ -95,6 +95,7 @@ class Matrix {
 
   ~Matrix() {
 	cout << "Destructor" << endl;
+	data.reset();
   }
 };
 }// Mat

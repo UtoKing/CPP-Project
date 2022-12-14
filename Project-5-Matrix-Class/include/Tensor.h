@@ -6,6 +6,7 @@
 #define PROJECT_5_MATRIX_CLASS_INCLUDE_TENSOR_H_
 
 #include <iostream>
+#include <memory>
 #include "Matrix.h"
 
 using namespace std;
@@ -16,7 +17,7 @@ template<typename T>
 class Tensor {
  private:
   size_t channel;
-  Matrix<T> **matrix_;
+  shared_ptr<Matrix<T>> data;
 
  public:
   Tensor() : channel(0) {}
@@ -24,8 +25,8 @@ class Tensor {
   Tensor(size_t r, size_t col, size_t ch, T *p_t);
 
   //Basic information getter
-  size_t getRow() const { return matrix_[0]->getRow(); }
-  size_t getColumn() const { return matrix_[0]->getColumn(); }
+  size_t getRow() const { return data.get()->getRow(); }
+  size_t getColumn() const { return data.get()->getColumn(); }
   size_t getChannel() const { return channel; }
   T getElement(size_t, size_t, size_t);
   bool setElement(size_t, size_t, size_t, const T &);
@@ -38,7 +39,7 @@ class Tensor {
   friend ostream &operator<<(ostream &os, const Tensor<U> &tensor);
 
   ~Tensor() {
-	matrix_[0]->~Matrix<T>();
+	data.get()->~Matrix<T>();
   }
 };
 } // Mat

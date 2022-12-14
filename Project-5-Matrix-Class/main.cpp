@@ -14,8 +14,8 @@ int main() {
   Matrix<double> matrix2 = matrix1.transpose();
   Tensor<double> tensor(2, 2, 3, p_double2);
   cout << tensor << endl;
-  Tensor<double> tensor_1 = tensor.transpose();
-  cout << tensor_1 << endl;
+//  Tensor<double> tensor_1 = tensor.transpose();
+//  cout << tensor_1 << endl;
 
   return 0;
 }
