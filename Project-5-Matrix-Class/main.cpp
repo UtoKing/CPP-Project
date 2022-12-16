@@ -10,12 +10,12 @@ int main() {
 	*(p_double + i) = i;
 	*(p_double2 + i) = i;
   }
-  Matrix<double> matrix1(4, 3, p_double);
-  Matrix<double> matrix2 = matrix1.transpose();
-  Tensor<double> tensor(2, 2, 3, p_double2);
+  Matrix<double> matrix1(2, 6, p_double);
+  Tensor<double> tensor(3, 2, 2, p_double2);
+  cout << matrix1 << endl;
   cout << tensor << endl;
-//  Tensor<double> tensor_1 = tensor.transpose();
-//  cout << tensor_1 << endl;
+  tensor = tensor * matrix1;
+  cout << tensor << endl;
 
   return 0;
 }

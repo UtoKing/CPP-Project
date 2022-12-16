@@ -6,6 +6,8 @@
 #define PROJECT_5_MATRIX_CLASS__MAIN_H_
 
 #include <iostream>
+#include "Matrix.h"
 #include "Tensor.h"
+#include "vector_operation.h"
 
 #endif //PROJECT_5_MATRIX_CLASS__MAIN_H_

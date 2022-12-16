@@ -99,17 +99,7 @@ bool Matrix<T>::multiply_(const Matrix<T> &matrix) {
 	return false;
   }
 
-  size_t r_row = this->row, r_column = matrix.getColumn(),
-	  middle = this->column;
-
-  for (int i = 0; i < r_row; ++i) {
-	for (int j = 0; j < middle; ++j) {
-	  auto r = *(this->data.get() + i * middle + j);
-	  for (int k = 0; k < r_column; ++k) {
-		*(data.get() + i * r_column + k) += r * *(matrix.getData().get() + j * r_column + k);
-	  }
-	}
-  }
+  *this = *this * matrix;
   return true;
 }
 
@@ -122,18 +112,7 @@ bool Matrix<T>::multiply_(const T &t) {
 	return false;
   }
 
-  auto *p_t = new T[row * column];
-  if (p_t == nullptr) {
-	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
-		 << "Error: Failed to allocate memory."
-		 << endl;
-	return false;
-  }
-
-  for (int i = 0; i < row * column; ++i) {
-	*(data.get() + i) *= t;
-  }
-
+  *this = *this * t;
   return true;
 }
 

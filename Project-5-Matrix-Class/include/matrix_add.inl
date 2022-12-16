@@ -22,7 +22,7 @@ Matrix<T> Matrix<T>::add(const Matrix<T> &matrix) const {
 		 << endl;
 	return Matrix<T>();
   }
-  if (this->row != matrix.row or this->column != matrix.column) {
+  if (this->row != matrix.getRow() or this->column != matrix.getColumn()) {
 	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
 		 << "Error: Matrix of different size."
 		 << endl;
@@ -30,7 +30,7 @@ Matrix<T> Matrix<T>::add(const Matrix<T> &matrix) const {
   }
 
   T *p_t = new T[this->row * this->column];
-  if (p_t== nullptr){
+  if (p_t == nullptr) {
 	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
 		 << "Error: Failed to allocate memory."
 		 << endl;
@@ -52,7 +52,7 @@ Matrix<T> Matrix<T>::add(const T &t) const {
   }
 
   T *p_t = new T[this->row * this->column];
-  if (p_t== nullptr){
+  if (p_t == nullptr) {
 	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
 		 << "Error: Failed to allocate memory."
 		 << endl;
@@ -70,14 +70,14 @@ bool Matrix<T>::add_(const Matrix<T> &matrix) {
 	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
 		 << "Error: Invalid object."
 		 << endl;
-	return Matrix<T>();
+	return false;
   } else if (not matrix.getData()) {
 	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
 		 << "Error: Input is invalid."
 		 << endl;
-	return Matrix<T>();
+	return false;
   }
-  if (this->row != matrix.row or this->column != matrix.column) {
+  if (this->row != matrix.getRow() or this->column != matrix.getColumn()) {
 	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
 		 << "Error: Matrix of different size."
 		 << endl;
@@ -85,7 +85,7 @@ bool Matrix<T>::add_(const Matrix<T> &matrix) {
   }
 
   for (int i = 0; i < this->row * this->column; ++i) {
-	*(this->data.get() + i) = *(this->data.get() + i) + *(matrix.getData().get() + i);
+	*(this->data.get() + i) += *(matrix.getData().get() + i);
   }
   return true;
 }
@@ -115,9 +115,9 @@ Matrix<T> Matrix<T>::operator+(const T &t) {
   return this->add(t);
 }
 
-template<typename T, typename V>
-Matrix<T> operator+(const V &v, const Matrix<T> &matrix) {
-  return matrix.add(T(v));
+template<typename U, typename V>
+Matrix<U> operator+(const V &v, const Matrix<U> &matrix) {
+  return matrix.add(U(v));
 }
 
 template<typename T>

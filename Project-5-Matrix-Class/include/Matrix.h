@@ -7,6 +7,7 @@
 
 #include <memory>
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -31,16 +32,16 @@ class Matrix {
   bool multiply_(const T &);
 
  public:
-  Matrix() : row(0), column(0) {}
-  Matrix(size_t r, size_t c) : row(r), column(c) {
-	data.get() = new T[r * c];
+  explicit Matrix(size_t r = 0, size_t c = 0) : row(r), column(c) {
+	shared_ptr<T> temp(new T[r * c]);
+	data = temp;
   }
   Matrix(size_t r, size_t c, T *p_t) : row(r), column(c) {
 	shared_ptr<T> temp(p_t);
-	this->data = temp;
+	data = temp;
   }
   Matrix(const Matrix &matrix) : row(matrix.row), column(matrix.column) {
-	this->data = matrix.getData();
+	data = matrix.getData();
   }
 
   //Basic information getter
@@ -49,6 +50,8 @@ class Matrix {
   size_t getColumn() const { return this->column; }
   T getElement(size_t r, size_t c);
   bool setElement(size_t r, size_t c, const T &t);
+  vector<T> operator[](size_t r);
+  const vector<T> &operator[](size_t) const;
 
   //Matrix operation
   Matrix<T> transpose() const;
@@ -94,7 +97,6 @@ class Matrix {
   friend ostream &operator<<(ostream &os, const Matrix<U> &matrix);
 
   ~Matrix() {
-	cout << "Destructor" << endl;
 	data.reset();
   }
 };

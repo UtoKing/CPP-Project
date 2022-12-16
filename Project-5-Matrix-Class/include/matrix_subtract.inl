@@ -23,7 +23,7 @@ Matrix<T> Matrix<T>::subtract(const Matrix<T> &matrix) const {
 		 << endl;
 	return Matrix<T>();
   }
-  if (this->row != matrix.row or this->column != matrix.column) {
+  if (this->row != matrix.getRow() or this->column != matrix.getColumn()) {
 	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
 		 << "Error: Matrix of different size."
 		 << endl;
@@ -79,7 +79,7 @@ bool Matrix<T>::subtract_(const Matrix<T> &matrix) {
 		 << endl;
 	return false;
   }
-  if (this->row != matrix.row or this->column != matrix.column) {
+  if (this->row != matrix.getRow() or this->column != matrix.getColumn()) {
 	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
 		 << "Error: Matrix of different size."
 		 << endl;
@@ -126,16 +126,16 @@ Matrix<T> operator-(const V &v, const Matrix<T> &matrix) {
 	return Matrix<T>();
   }
 
-  auto *p_t = new T[matrix.row * matrix.column];
+  auto *p_t = new T[matrix.getRow() * matrix.getColumn()];
   if (p_t== nullptr){
 	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
 		 << "Error: Failed to allocate memory."
 		 << endl;
   }
-  for (int i = 0; i < matrix.row * matrix.column; ++i) {
+  for (int i = 0; i < matrix.getRow() * matrix.getColumn(); ++i) {
 	*(p_t + i) = v - *(matrix.data.get() + i);
   }
-  return Matrix<T>(matrix.row, matrix.column, p_t);
+  return Matrix<T>(matrix.getRow(), matrix.getColumn(), p_t);
 }
 
 template<typename T>

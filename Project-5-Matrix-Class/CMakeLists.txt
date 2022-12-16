@@ -11,4 +11,4 @@ add_compile_options(-march=native)
 
 include_directories(include)
 
-add_executable(Project_5_Matrix_Class main.cpp include/Matrix.h include/Matrix.inl include/matrix_add.inl include/matrix_subtract.inl include/matrix_multiply.inl main.h include/matrix_operation.inl include/Tensor.inl include/Tensor.h)
+add_executable(Project_5_Matrix_Class main.cpp include/Matrix.h include/Matrix.inl include/matrix_add.inl include/matrix_subtract.inl include/matrix_multiply.inl main.h include/matrix_operation.inl include/Tensor.inl include/Tensor.h include/vector_operation.h include/tensor_operation.inl include/tensor_add.inl include/tensor_subtract.inl include/tensor_multiply.inl)

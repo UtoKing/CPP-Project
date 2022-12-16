@@ -23,7 +23,7 @@ T Matrix<T>::getElement(size_t r, size_t c) {
 	return 0;
   }
 
-  return *(this->data.get() + r * this->column + c);
+  return *(this->data.get() + r * column + c);
 }
 
 template<typename T>
@@ -43,6 +43,24 @@ bool Matrix<T>::setElement(size_t r, size_t c, const T &t) {
 
   *(this->data.get() + r * this->column + c) = t;
   return true;
+}
+
+template<typename T>
+vector<T> Matrix<T>::operator[](size_t r) {
+  vector<T> v(column);
+  for (int i = 0; i < column; ++i) {
+	v[i] = *(data.get() + r * column + i);
+  }
+  return v;
+}
+
+template<typename T>
+const vector<T> &Matrix<T>::operator[](size_t r) const {
+  vector<T> v(column);
+  for (int i = 0; i < column; ++i) {
+	v[i] = *(data.get() + r * column + i);
+  }
+  return v;
 }
 
 template<typename T>
