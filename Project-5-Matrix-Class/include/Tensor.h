@@ -46,6 +46,7 @@ class Tensor {
   template<typename U>
   friend Tensor<U> operator+(const Matrix<U> &, const Tensor<U> &);
   Tensor<T> &operator+=(const Tensor<T> &);
+  Tensor<T> &operator+=(const Matrix<T> &);
   Tensor<T> &operator+=(const T &);
 
   //subtraction
@@ -57,6 +58,7 @@ class Tensor {
   template<typename U>
   friend Tensor<U> operator-(const Matrix<U> &, const Tensor<U> &);
   Tensor<T> &operator-=(const Tensor<T> &);
+  Tensor<T> &operator-=(const Matrix<T> &);
   Tensor<T> &operator-=(const T &);
 
   //multiplication
@@ -68,6 +70,7 @@ class Tensor {
   template<typename U>
   friend Tensor<U> operator*(const Matrix<U> &, const Tensor<U> &);
   Tensor<T> &operator*=(const Tensor<T> &);
+  Tensor<T> &operator*=(const Matrix<T> &);
   Tensor<T> &operator*=(const T &);
 
   //io stream

@@ -15,19 +15,19 @@ Tensor<T> Tensor<T>::operator*(const Tensor<T> &tensor) {
 	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
 		 << "Error: Invalid object."
 		 << endl;
-	return Tensor < T > ();
+	return Tensor<T>();
   }
   if (not tensor.getData()) {
 	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
 		 << "Error: Invalid input."
 		 << endl;
-	return Tensor < T > ();
+	return Tensor<T>();
   }
   if (this->channel != tensor.getChannel() or this->column != tensor.getRow()) {
 	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
 		 << "Error: Shape mismatch."
 		 << endl;
-	return Tensor < T > ();
+	return Tensor<T>();
   }
 
   auto ptr = new T[channel * row * tensor.getColumn()];
@@ -38,64 +38,7 @@ Tensor<T> Tensor<T>::operator*(const Tensor<T> &tensor) {
 	auto p = mat_result.getData().get();
 	copy(p, p + row * tensor.getColumn(), ptr + i * row * tensor.getColumn());
   }
-  return Tensor < T > (channel, row, tensor.getColumn(), ptr);
-}
-
-template<typename T>
-Tensor<T> Tensor<T>::operator*(const T &t) const {
-  if (not this->data) {
-	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
-		 << "Error: Invalid object."
-		 << endl;
-	return Tensor < T > ();
-  }
-  auto ptr = new T[channel * row * column];
-  for (int i = 0; i < channel * row * column; ++i) {
-	*(ptr + i) = *(data.get() + i) * t;
-  }
-  return Tensor < T > (channel, row, column, ptr);
-}
-template<typename T>
-Tensor<T> &Tensor<T>::operator*=(const Tensor<T> &tensor) {
-  if (not data) {
-	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
-		 << "Error: Invalid object."
-		 << endl;
-	return Tensor < T > ();
-  }
-  if (not tensor.getData()) {
-	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
-		 << "Error: Input is invalid."
-		 << endl;
-	return Tensor < T > ();
-  }
-
-  if (this->column != tensor.getRow() or this->channel != tensor.getChannel()) {
-	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
-		 << "Error: First matrix's column doesn't match second's row."
-		 << endl;
-	return Tensor < T > ();
-  }
-
-  *this = *this * tensor;
-  return *this;
-}
-
-template<typename T>
-Tensor<T> &Tensor<T>::operator*=(const T &t) {
-  if (not data) {
-	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
-		 << "Error: Invalid object."
-		 << endl;
-	return Tensor < T > ();
-  }
-  *this = *this * t;
-  return *this;
-}
-
-template<typename U, typename V>
-Tensor<U> operator*(const V &v, const Tensor<U> &tensor) {
-  return tensor * U(v);
+  return Tensor<T>(channel, row, tensor.getColumn(), ptr);
 }
 
 template<typename T>
@@ -104,18 +47,18 @@ Tensor<T> Tensor<T>::operator*(const Matrix<T> &matrix) {
 	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
 		 << "Error: Invalid object."
 		 << endl;
-	return Tensor < T > ();
+	return Tensor<T>();
   } else if (not matrix.getData()) {
 	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
 		 << "Error: Input is invalid."
 		 << endl;
-	return Tensor < T > ();
+	return Tensor<T>();
   }
   if (column != matrix.getRow()) {
 	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
 		 << "Error: Matrix of different size."
 		 << endl;
-	return Tensor < T > ();
+	return Tensor<T>();
   }
 
   auto ptr = new T[channel * row * matrix.getColumn()];
@@ -125,7 +68,45 @@ Tensor<T> Tensor<T>::operator*(const Matrix<T> &matrix) {
 	auto p = result.getData().get();
 	copy(p, p + row * matrix.getColumn(), ptr + i * row * matrix.getColumn());
   }
-  return Tensor < T > (channel, row, matrix.getColumn(), ptr);
+  return Tensor<T>(channel, row, matrix.getColumn(), ptr);
+}
+
+template<typename T>
+Tensor<T> Tensor<T>::operator*(const T &t) const {
+  if (not this->data) {
+	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
+		 << "Error: Invalid object."
+		 << endl;
+	return Tensor<T>();
+  }
+  auto ptr = new T[channel * row * column];
+  for (int i = 0; i < channel * row * column; ++i) {
+	*(ptr + i) = *(data.get() + i) * t;
+  }
+  return Tensor<T>(channel, row, column, ptr);
+}
+
+template<typename T>
+Tensor<T> &Tensor<T>::operator*=(const Tensor<T> &tensor) {
+  *this = *this * tensor;
+  return *this;
+}
+
+template<typename T>
+Tensor<T> &Tensor<T>::operator*=(const Matrix<T> &matrix) {
+  *this = *this * matrix;
+  return *this;
+}
+
+template<typename T>
+Tensor<T> &Tensor<T>::operator*=(const T &t) {
+  *this = *this * t;
+  return *this;
+}
+
+template<typename U, typename V>
+Tensor<U> operator*(const V &v, const Tensor<U> &tensor) {
+  return tensor * U(v);
 }
 
 template<typename U>

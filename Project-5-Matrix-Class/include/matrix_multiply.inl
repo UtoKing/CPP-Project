@@ -26,7 +26,7 @@ Matrix<T> Matrix<T>::multiply(const Matrix<T> &matrix) const {
 
   if (this->column != matrix.getRow()) {
 	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
-		 << "Error: First matrix's column doesn't match second's row."
+		 << "Error: Shape mismatch."
 		 << endl;
 	return Matrix<T>();
   }
@@ -78,45 +78,6 @@ Matrix<T> Matrix<T>::multiply(const T &t) const {
 }
 
 template<typename T>
-bool Matrix<T>::multiply_(const Matrix<T> &matrix) {
-  if (not data) {
-	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
-		 << "Error: Invalid object."
-		 << endl;
-	return false;
-  }
-  if (not matrix.getData()) {
-	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
-		 << "Error: Input is invalid."
-		 << endl;
-	return false;
-  }
-
-  if (this->column != matrix.getRow()) {
-	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
-		 << "Error: First matrix's column doesn't match second's row."
-		 << endl;
-	return false;
-  }
-
-  *this = *this * matrix;
-  return true;
-}
-
-template<typename T>
-bool Matrix<T>::multiply_(const T &t) {
-  if (not data) {
-	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
-		 << "Error: Invalid object."
-		 << endl;
-	return false;
-  }
-
-  *this = *this * t;
-  return true;
-}
-
-template<typename T>
 Matrix<T> Matrix<T>::operator*(const Matrix<T> &matrix) {
   return this->multiply(matrix);
 }
@@ -129,14 +90,16 @@ template<typename U, typename V>
 Matrix<U> operator*(const V &v, const Matrix<U> &matrix) {
   return matrix.multiply(U(v));
 }
+
 template<typename T>
 Matrix<T> &Matrix<T>::operator*=(const Matrix<T> &matrix) {
-  this->multiply_(matrix);
+  *this = this->multiply(matrix);
   return *this;
 }
+
 template<typename T>
 Matrix<T> &Matrix<T>::operator*=(const T &t) {
-  this->multiply_(t);
+  *this = this->multiply(t);
   return *this;
 }
 

@@ -10,52 +10,6 @@
 namespace Mat {
 
 template<typename T>
-Tensor<T> &Tensor<T>::operator+=(const T &t) {
-  if (not this->data) {
-	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
-		 << "Error: Invalid object."
-		 << endl;
-	return false;
-  }
-
-  for (int i = 0; i < channel * row * column; ++i) {
-	*(this->data.get() + i) += t;
-  }
-  return *this;
-}
-
-template<typename T>
-Tensor<T> &Tensor<T>::operator+=(const Tensor<T> &tensor) {
-  if (not this->data) {
-	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
-		 << "Error: Invalid object."
-		 << endl;
-	return Tensor < T > ();
-  } else if (not tensor.getData()) {
-	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
-		 << "Error: Input is invalid."
-		 << endl;
-	return Tensor < T > ();
-  }
-  if (this->row != tensor.getRow() or this->column != tensor.getColumn() or this->channel != tensor.getChannel()) {
-	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
-		 << "Error: Matrix of different size."
-		 << endl;
-	return Tensor < T > ();
-  }
-
-  for (int i = 0; i < channel * row * column; ++i) {
-	*(this->data.get() + i) += *(tensor.getData().get() + i);
-  }
-  return *this;
-}
-
-template<typename U, typename V>
-Tensor<U> operator+(const V &v, const Tensor<U> &tensor) {
-  return tensor + U(v);
-}
-
-template<typename T>
 Tensor<T> Tensor<T>::operator+(const T &t) {
   if (not this->data) {
 	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
@@ -83,18 +37,18 @@ Tensor<T> Tensor<T>::operator+(const Tensor<T> &tensor) {
 	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
 		 << "Error: Invalid object."
 		 << endl;
-	return Tensor < T > ();
+	return Tensor<T>();
   } else if (not tensor.getData()) {
 	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
 		 << "Error: Input is invalid."
 		 << endl;
-	return Tensor < T > ();
+	return Tensor<T>();
   }
   if (this->row != tensor.getRow() or this->column != tensor.getColumn() or this->channel != tensor.getChannel()) {
 	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
 		 << "Error: Matrix of different size."
 		 << endl;
-	return Tensor < T > ();
+	return Tensor<T>();
   }
 
   T *p_t = new T[channel * row * column];
@@ -116,18 +70,18 @@ Tensor<T> Tensor<T>::operator+(const Matrix<T> &matrix) {
 	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
 		 << "Error: Invalid object."
 		 << endl;
-	return Tensor < T > ();
+	return Tensor<T>();
   } else if (not matrix.getData()) {
 	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
 		 << "Error: Input is invalid."
 		 << endl;
-	return Tensor < T > ();
+	return Tensor<T>();
   }
   if (this->row != matrix.row or this->column != matrix.column) {
 	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
 		 << "Error: Matrix of different size."
 		 << endl;
-	return Tensor < T > ();
+	return Tensor<T>();
   }
 
   auto ptr = new T[channel * row * column];
@@ -137,7 +91,30 @@ Tensor<T> Tensor<T>::operator+(const Matrix<T> &matrix) {
 	auto p = result.getData().get();
 	copy(p, p + row * column, ptr + i * row * column);
   }
-  return Tensor < T > (channel, row, column, ptr);
+  return Tensor<T>(channel, row, column, ptr);
+}
+
+template<typename T>
+Tensor<T> &Tensor<T>::operator+=(const T &t) {
+  *this = *this + t;
+  return *this;
+}
+
+template<typename T>
+Tensor<T> &Tensor<T>::operator+=(const Tensor<T> &tensor) {
+  *this = *this + tensor;
+  return *this;
+}
+
+template<typename T>
+Tensor<T> &Tensor<T>::operator+=(const Matrix<T> &matrix) {
+  *this = *this + matrix;
+  return *this;
+}
+
+template<typename U, typename V>
+Tensor<U> operator+(const V &v, const Tensor<U> &tensor) {
+  return tensor + U(v);
 }
 
 template<typename U>

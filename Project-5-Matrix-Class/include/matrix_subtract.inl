@@ -31,7 +31,7 @@ Matrix<T> Matrix<T>::subtract(const Matrix<T> &matrix) const {
   }
 
   T *p_t = new T[this->row * this->column];
-  if (p_t== nullptr){
+  if (p_t == nullptr) {
 	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
 		 << "Error: Failed to allocate memory."
 		 << endl;
@@ -53,7 +53,7 @@ Matrix<T> Matrix<T>::subtract(const T &t) const {
   }
 
   T *p_t = new T[this->row * this->column];
-  if (p_t== nullptr){
+  if (p_t == nullptr) {
 	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
 		 << "Error: Failed to allocate memory."
 		 << endl;
@@ -63,48 +63,6 @@ Matrix<T> Matrix<T>::subtract(const T &t) const {
 	*(p_t + i) = *(this->data.get() + i) - t;
   }
   return Matrix<T>(this->row, this->column, p_t);
-}
-
-template<typename T>
-bool Matrix<T>::subtract_(const Matrix<T> &matrix) {
-  if (not this->data) {
-	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
-		 << "Error: Invalid object."
-		 << endl;
-	return false;
-  }
-  if (not matrix.getData()) {
-	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
-		 << "Error: Invalid object."
-		 << endl;
-	return false;
-  }
-  if (this->row != matrix.getRow() or this->column != matrix.getColumn()) {
-	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
-		 << "Error: Matrix of different size."
-		 << endl;
-	return false;
-  }
-
-  for (int i = 0; i < this->row * this->column; ++i) {
-	*(this->data.get() + i) = *(this->data.get() + i) - *(matrix.getData().get() + i);
-  }
-  return true;
-}
-
-template<typename T>
-bool Matrix<T>::subtract_(const T &t) {
-  if (not this->data) {
-	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
-		 << "Error: Invalid object."
-		 << endl;
-	return false;
-  }
-
-  for (int i = 0; i < this->row * this->column; ++i) {
-	*(this->data.get() + i) -= t;
-  }
-  return true;
 }
 
 template<typename T>
@@ -127,7 +85,7 @@ Matrix<T> operator-(const V &v, const Matrix<T> &matrix) {
   }
 
   auto *p_t = new T[matrix.getRow() * matrix.getColumn()];
-  if (p_t== nullptr){
+  if (p_t == nullptr) {
 	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
 		 << "Error: Failed to allocate memory."
 		 << endl;
@@ -140,13 +98,13 @@ Matrix<T> operator-(const V &v, const Matrix<T> &matrix) {
 
 template<typename T>
 Matrix<T> &Matrix<T>::operator-=(const Matrix<T> &matrix) {
-  this->subtract_(matrix);
+  *this = this->subtract(matrix);
   return *this;
 }
 
 template<typename T>
 Matrix<T> &Matrix<T>::operator-=(const T &t) {
-  this->subtract_(t);
+  *this = this->subtract(t);
   return *this;
 }
 

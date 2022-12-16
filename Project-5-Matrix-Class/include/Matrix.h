@@ -19,18 +19,6 @@ class Matrix {
   shared_ptr<T> data;
   size_t row, column;
 
-  //self-addition
-  bool add_(const T &);
-  bool add_(const Matrix<T> &);
-
-  //self-subtraction
-  bool subtract_(const T &);
-  bool subtract_(const Matrix<T> &);
-
-  //self-multiplication
-  bool multiply_(const Matrix<T> &);
-  bool multiply_(const T &);
-
  public:
   explicit Matrix(size_t r = 0, size_t c = 0) : row(r), column(c) {
 	shared_ptr<T> temp(new T[r * c]);

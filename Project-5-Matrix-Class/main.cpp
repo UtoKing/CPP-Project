@@ -12,6 +12,7 @@ int main() {
   }
   Matrix<double> matrix1(2, 6, p_double);
   Tensor<double> tensor(3, 2, 2, p_double2);
+  matrix1 += 1;
   cout << matrix1 << endl;
   cout << tensor << endl;
   tensor = tensor * matrix1;

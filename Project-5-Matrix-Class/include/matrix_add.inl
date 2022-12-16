@@ -65,47 +65,6 @@ Matrix<T> Matrix<T>::add(const T &t) const {
 }
 
 template<typename T>
-bool Matrix<T>::add_(const Matrix<T> &matrix) {
-  if (not this->data) {
-	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
-		 << "Error: Invalid object."
-		 << endl;
-	return false;
-  } else if (not matrix.getData()) {
-	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
-		 << "Error: Input is invalid."
-		 << endl;
-	return false;
-  }
-  if (this->row != matrix.getRow() or this->column != matrix.getColumn()) {
-	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
-		 << "Error: Matrix of different size."
-		 << endl;
-	return false;
-  }
-
-  for (int i = 0; i < this->row * this->column; ++i) {
-	*(this->data.get() + i) += *(matrix.getData().get() + i);
-  }
-  return true;
-}
-
-template<typename T>
-bool Matrix<T>::add_(const T &t) {
-  if (not this->data) {
-	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
-		 << "Error: Invalid object."
-		 << endl;
-	return false;
-  }
-
-  for (int i = 0; i < this->row * this->column; ++i) {
-	*(this->data.get() + i) += t;
-  }
-  return true;
-}
-
-template<typename T>
 Matrix<T> Matrix<T>::operator+(const Matrix<T> &matrix) {
   return this->add(matrix);
 }
@@ -122,13 +81,13 @@ Matrix<U> operator+(const V &v, const Matrix<U> &matrix) {
 
 template<typename T>
 Matrix<T> &Matrix<T>::operator+=(const Matrix<T> &matrix) {
-  this->add_(matrix);
+  *this = this->add(matrix);
   return *this;
 }
 
 template<typename T>
 Matrix<T> &Matrix<T>::operator+=(const T &t) {
-  this->add_(t);
+  *this = this->add(t);
   return *this;
 }
 }
