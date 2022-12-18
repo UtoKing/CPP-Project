@@ -25,6 +25,7 @@ class Tensor {
   Tensor(const Tensor<T> &);
 
   //Basic information getter and setter
+  shared_ptr<T> getData() const { return this->data; }
   size_t getRow() const { return row; }
   size_t getColumn() const { return column; }
   size_t getChannel() const { return channel; }
@@ -72,6 +73,12 @@ class Tensor {
   Tensor<T> &operator*=(const Tensor<T> &);
   Tensor<T> &operator*=(const Matrix<T> &);
   Tensor<T> &operator*=(const T &);
+
+  //Assignment
+  Tensor<T> &operator=(const Tensor<T> &);
+
+  //equal
+  bool operator==(const Tensor<T> &);
 
   //io stream
   template<typename U>

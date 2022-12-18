@@ -33,7 +33,7 @@ Tensor<T> Tensor<T>::transpose() const {
 	copy(p, p + row * column, p_t + k * row * column);
   }
 
-  return Tensor<T>(row, column, channel, p_t);
+  return Tensor<T>(channel, column, row, p_t);
 }
 
 template<typename T>

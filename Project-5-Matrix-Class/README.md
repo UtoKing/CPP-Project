@@ -45,3 +45,130 @@ Tensor 的相乘要求两个 Tensor 的通道数相等，且每个通道的矩�
 ## PART 2: Code
 因本次的代码量较大，只会放一部分代码进行展示，其他可以在 `include` 文件夹中查看。
 每个文件的命名都是相应的 Matrix 或 Tensor 的操作。
+
+**Tensor 的构造函数**
+
+```c++
+template<typename T>
+Tensor<T>::Tensor(size_t ch, size_t r, size_t col): channel(ch), row(r), column(col) {
+  shared_ptr<T> temp(new T[r * col * ch]);
+  data = temp;
+}
+
+template<typename T>
+Tensor<T>::Tensor(size_t ch, size_t r, size_t col, T *p_t): channel(ch), row(r), column(col) {
+  shared_ptr<T> temp(p_t);
+  data = temp;
+}
+
+template<typename T>
+Tensor<T>::Tensor(const Tensor<T> &tensor):row(tensor.row), column(tensor.column), channel(tensor.channel) {
+  data = tensor.data;
+}
+```
+
+**Tensor 的提取通道及重载 `[]`**
+
+```c++
+template<typename T>
+Matrix<T> Tensor<T>::getChannelMatrix(size_t ch) const {
+  auto *t = new T[row * column];
+  copy(data.get() + ch * row * column, data.get() + (ch + 1) * row * column, t);
+  return Matrix<T>(row, column, t);
+}
+
+template<typename T>
+Matrix<T> Tensor<T>::operator[](size_t ch) {
+  return getChannelMatrix(ch);
+}
+
+template<typename T>
+const Matrix<T> &Tensor<T>::operator[](size_t ch) const {
+  return getChannelMatrix(ch);
+}
+```
+
+**Matrix 的 `<<` 的重载和 Tensor 的 `<<` 的重载**
+
+```c++
+template<typename T>
+ostream &operator<<(ostream &os, const Matrix<T> &matrix) {
+  os << '[';
+  shared_ptr<T> p_c = matrix.getData();
+  for (size_t j = 0; j < matrix.row; ++j) {
+	if (j != 0) os << ' ';
+	os << '[';
+	for (size_t k = 0; k < matrix.column; ++k) {
+	  os << *(p_c.get() + j * (matrix.column) + k);
+	  if (k < matrix.column - 1) os << ", ";
+	}
+	os << ']';
+	if (j < matrix.row - 1) os << endl;
+  }
+  os << ']';
+  return os;
+}
+
+template<typename U>
+ostream &operator<<(ostream &os, const Tensor<U> &tensor) {
+  os << "[";
+  for (int i = 0; i < tensor.channel; ++i) {
+	if (i != 0) os << " ";
+	os << tensor.getChannelMatrix(i);
+	if (i != tensor.channel - 1) os << "," << endl;
+  }
+  os << "]";
+  return os;
+}
+```
+
+## PART 3: Verification
+
+以下为运行 `main.cpp` 的输出。
+
+```text
+tensor=
+[[[0, 1, 2, 3]
+ [4, 5, 6, 7]
+ [8, 9, 10, 11]],
+ [[12, 13, 14, 15]
+ [16, 17, 18, 19]
+ [20, 21, 22, 23]]]
+tensor's shape: channel: 2 row: 3 Column: 4
+Copy constructor and assignment:
+tensor2[0]=
+[[0, 1, 2, 3]
+ [4, 5, 6, 7]
+ [8, 9, 10, 11]]
+tensor3[1]=
+[[12, 13, 14, 15]
+ [16, 17, 18, 19]
+ [20, 21, 22, 23]]
+Transpose
+[[[0, 4, 8]
+ [1, 5, 9]
+ [2, 6, 10]
+ [3, 7, 11]],
+ [[12, 16, 20]
+ [13, 17, 21]
+ [14, 18, 22]
+ [15, 19, 23]]]
+Addition
+tensor+1=
+[[[1, 2, 3, 4]
+ [5, 6, 7, 8]
+ [9, 10, 11, 12]],
+ [[13, 14, 15, 16]
+ [17, 18, 19, 20]
+ [21, 22, 23, 24]]]
+Multiplication
+tensor * tensor's transpose=
+[[[14, 38, 62]
+ [38, 126, 214]
+ [62, 214, 366]],
+ [[734, 950, 1228]
+ [988, 1356, 1724]
+ [1228, 1724, 2220]]]
+Extract specific location's element:
+tensor6[0][1][2]=214
+```

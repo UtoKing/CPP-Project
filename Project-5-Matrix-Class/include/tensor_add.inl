@@ -15,7 +15,7 @@ Tensor<T> Tensor<T>::operator+(const T &t) {
 	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
 		 << "Error: Invalid object."
 		 << endl;
-	return Matrix<T>();
+	return Tensor<T>();
   }
 
   T *p_t = new T[row * column * channel];
@@ -23,12 +23,12 @@ Tensor<T> Tensor<T>::operator+(const T &t) {
 	cerr << "File: " << __FILE__ << ", Line: " << __LINE__ << ", Function: " << __FUNCTION__ << endl
 		 << "Error: Failed to allocate memory."
 		 << endl;
-	return Matrix<T>();
+	return Tensor<T>();
   }
   for (int i = 0; i < row * column * channel; ++i) {
 	*(p_t + i) = t + *(this->data.get() + i);
   }
-  return Matrix<T>(channel, row, column, p_t);
+  return Tensor<T>(channel, row, column, p_t);
 }
 
 template<typename T>
@@ -61,7 +61,7 @@ Tensor<T> Tensor<T>::operator+(const Tensor<T> &tensor) {
   for (int i = 0; i < channel * row * column; ++i) {
 	*(p_t + i) = *(this->data.get() + i) + *(tensor.getData().get() + i);
   }
-  return Matrix<T>(channel, row, column, p_t);
+  return Tensor<T>(channel, row, column, p_t);
 }
 
 template<typename T>
